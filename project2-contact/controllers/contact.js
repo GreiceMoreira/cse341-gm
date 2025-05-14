@@ -11,7 +11,7 @@ const getAllContacts = async (req,res) => {
 
 const getContactById = async (req,res) => {
     try{
-        const contact = await Contact.findById(req.params.id);
+        const contact = await Contact.findById({ _id: req.params.id });
         if(!contact) return res.status(404).send('Contact not found');
         res.json(contact);
     }
