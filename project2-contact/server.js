@@ -1,17 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+const dotenv = require('dotenv').config();
 
 const app = express();
-const port = 8080;
+const port = (process.env.PORT || 8080);
+
+app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URL)
     .then( () => {
     console.log('MongoDB connected!');
-    app.listen(port);
-    console.log('Web Server ir listening at port ' + (process.env.port || port));
-    })
+    app.listen(port, () => {
+        console.log('Web Server ir listening at port ', port)
+    }
+    )})
 
     .catch(err => console.log('Error connexting to MongoDB: ', err));
 
