@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 const port = 8080;
 
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL)
     .then( () => {
     console.log('MongoDB connected!');
     app.listen(port);
