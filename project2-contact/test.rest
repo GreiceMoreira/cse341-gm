@@ -3,3 +3,32 @@ GET https://cse341-gm.onrender.com/contacts
 
 ### Get one contact by ID
 GET https://cse341-gm.onrender.com/contacts/6824d56dbd8b765b934074ea
+
+### POST - Create new contact
+POST https://cse341-gm.onrender.com/contacts
+Content-Type: application/json
+{
+    "firstName": "Alice",
+    "lastName": "Silva",
+    "email": "alice@example.com",
+    "favoriteColor": "green",
+    "birthday": "1991-05-01"
+}
+###
+
+### PUT - Update contact
+PUT https://cse341-gm.onrender.com/contacts/6824d56dbd8b765b934074ea
+Content-Type: application/json
+{
+     "firstName": "Alice",
+    "lastName": "Silva",
+    "email": "alice@example.com",
+    "favoriteColor": "yellow",
+    "birthday": "1991-05-01"
+}
+
+###
+
+### DELETE - Remove Contact
+DELETE  https://cse341-gm.onrender.com/contacts/6824d56dbd8b765b934074ea
+Content-Type: application/json

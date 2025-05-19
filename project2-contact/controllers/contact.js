@@ -20,7 +20,61 @@ const getContactById = async (req,res) => {
     }
 };
 
+const postNewContact = async(req, res) => {
+    const contact = new Contact({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        favoriteColor: req.body.favoriteColor,
+        birthday: req.body.birthday
+    });
+
+    try{
+        const newContact = await contact.save();
+        res.status(201).json(newContact);
+    } catch(err){
+        res.status(400).json({message: err.message});
+    }
+}
+
+const updateContact = async(req,res) => {
+    try {
+        const updateContact = await Contact.findByIdAndUpdate(
+            req.params.id,
+            {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                favoriteColor: req.body.favoriteColor,
+                birthday: req.body.birthday
+            },
+            { new: true}
+        );
+        if (!updateContact) 
+            return res.status(400).json({message: 'Contact not found'});
+        res.status(200).json(updateContact);
+    } catch(err) {
+        res.status(400).json({message: err.message})
+    }
+}
+
+const deleteContact =async(req, res) => {
+    try {
+        const deletedContact = await Contact.findByIdAndDelete(
+            req.params.id
+        )
+        if (!deletedContact) 
+            return res.status(400).json({message: 'Contact not found'});
+        res.status(200).json({message: 'Contact deleted'});
+    }catch(err) {
+        res.status(400).json({message: err.message})
+    }
+}
+
 module.exports = {
     getAllContacts,
-    getContactById
+    getContactById,
+    postNewContact,
+    updateContact,
+    deleteContact
 };
