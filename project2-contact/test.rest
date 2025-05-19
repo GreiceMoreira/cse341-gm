@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### PUT - Update contact
-PUT https://cse341-gm.onrender.com/contacts/6824d56dbd8b765b934074ea
+PUT https://cse341-gm.onrender.com/contacts/682b7cce1714beb65992abf8
 Content-Type: application/json
 
 {
@@ -29,4 +29,4 @@ Content-Type: application/json
 }
 
 ### DELETE - Remove Contact
-DELETE https://cse341-gm.onrender.com/contacts/6824d56dbd8b765b934074ea
+DELETE https://cse341-gm.onrender.com/contacts/682b7cce1714beb65992abf8
