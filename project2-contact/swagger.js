@@ -10,11 +10,8 @@ const doc = {
           },
           version: "1.0.0"
     },
-    servers: [
-        { url: "http://localhost:8080" },
-        { url: "https://cse341-gm.onrender.com" }
-    ],
-    schemes: ['http', 'https'],
+    host: "cse341-gm.onrender.com",
+    schemes: ["https"],
 
     definitions: {
         Contact: {
