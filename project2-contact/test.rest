@@ -21,12 +21,12 @@ PUT https://cse341-gm.onrender.com/contacts/682b98e76a83f98d4147db4a
 Content-Type: application/json
 
 {
-  "firstName": "Alice",
-  "lastName": "Silva",
-  "email": "alice@example.com",
-  "favoriteColor": "yellow",
-  "birthday": "1991-05-01"
+    "firstName": "Amanda",
+    "lastName": "Any",
+    "email": "anyamanda@test.com",
+    "favoriteColor": "blue",
+  "birthday": "1990-01-02"
 }
 
 ### DELETE - Remove Contact
-DELETE https://cse341-gm.onrender.com/contacts/6824d5aabd8b765b934074eb
+DELETE https://cse341-gm.onrender.com/contacts/682bb2b0f57321efac5bc7ab
