@@ -1,0 +1,150 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Mood Journal API",
+    "description": "API to create and track mood journal entries including sleep, hydration, and exercise.",
+    "contact": {
+      "name": "Greice Moreira",
+      "email": "deandradegreice@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "host": "cse341-gm.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/entries/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "example": "any"
+                },
+                "date": {
+                  "example": "any"
+                },
+                "mood": {
+                  "example": "any"
+                },
+                "exercise": {
+                  "example": "any"
+                },
+                "water": {
+                  "example": "any"
+                },
+                "sleepHours": {
+                  "example": "any"
+                },
+                "bestMemory": {
+                  "example": "any"
+                },
+                "gratitude": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "email": {
+          "type": "string",
+          "example": "user@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "strongpassword123"
+        },
+        "name": {
+          "type": "string",
+          "example": "Jane Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 30
+        },
+        "avatar": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "Entry": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "userId123"
+        },
+        "date": {
+          "type": "string",
+          "example": "2025-05-20"
+        },
+        "mood": {
+          "type": "number",
+          "example": 4
+        },
+        "exercise": {
+          "type": "boolean",
+          "example": true
+        },
+        "water": {
+          "type": "number",
+          "example": 8
+        },
+        "sleepHours": {
+          "type": "number",
+          "example": 7.5
+        },
+        "bestMemory": {
+          "type": "string",
+          "example": "Had lunch with my friend"
+        },
+        "gratitude": {
+          "type": "string",
+          "example": "My health"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "GitHub Repository",
+    "url": "https://github.com/GreiceMoreira/cse341-gm/tree/main/project3-wellness"
+  }
+}
