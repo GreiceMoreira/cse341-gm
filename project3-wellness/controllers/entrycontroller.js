@@ -14,9 +14,16 @@ const getAllEntries = async (req, res) => {
 const newEntry = async (req, res) => {
     const { user, date, mood, exercise, water, sleepHours, bestMemory, gratitude } = req.body;
 
+
+    if (!date) {
+      return res.status(400).json({ message: 'Date is required' });
+    }
+
+    const { targetDate } = getDateRange(date);
+
     const entry = new Entry({
         user,
-        date,
+        date: targetDate,
         mood,
         exercise,
         water,

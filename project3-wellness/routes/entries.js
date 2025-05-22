@@ -1,7 +1,7 @@
 const express = require('express');
 const entriesController = require('../controllers/entrycontroller');
 const router = express.Router();
-const {validateEntry} = require('../validations/entryValidation')
+const {validateEntry, validateUpdateEntry} = require('../validations/entryValidation')
 const { handleValidationErrors } = require('../validations/handleValidationErrors');
 const { validateDelete } = require('../validations/deleteValidation');
 
@@ -36,7 +36,7 @@ router.post('/',
  * @returns {Error} 404 - Entry not found
  */
 router.put('/:date', 
-    validateEntry,
+    validateUpdateEntry,
     handleValidationErrors,
     entriesController.updateEntry);
 

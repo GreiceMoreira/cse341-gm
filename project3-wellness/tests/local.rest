@@ -4,11 +4,12 @@ GET http://localhost:8080/entries
 ###
 
 ### POST - Create new Entry
-POST http://localhost:8080/entries/2025-01-01
+POST http://localhost:8080/entries/
 Content-Type: application/json
 
 {
     "user": "682f667b4e0e05ce48ceeb27",
+    "date":"2025-08-12",
     "mood": "5",
     "exercise": false,
     "water": "2.5",
