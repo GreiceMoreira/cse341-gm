@@ -21,7 +21,7 @@ router.get('/', entriesController.getAllEntries);
  * @returns {Error} 400 - Validation error
  */
 
-router.post('/:date', 
+router.post('/', 
     validateEntry,
     handleValidationErrors,
     entriesController.newEntry);
