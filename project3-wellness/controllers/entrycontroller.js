@@ -41,13 +41,13 @@ const updateEntry = async(req, res) => {
     }
 
     try{
-        const date = req.params
-        const {userId, mood, exercise, water, sleepHours, bestMemory, gratitude } = req.body;
+        const date = req.params.date
+        const {user, mood, exercise, water, sleepHours, bestMemory, gratitude } = req.body;
         const {targetDate, nextDate} = getDateRange(date);
 
         const updatedEntry = await Entry.findOneAndUpdate(
             {
-                user: userId, 
+                user: user, 
                 date: {
                     $gte: targetDate,
                     $lt: nextDate
@@ -65,7 +65,7 @@ const updateEntry = async(req, res) => {
                 new: true
             }
         );
-        if(!updateEntry){
+        if(!updatedEntry){
             return res.status(404).json({message: 'No entry found for given date'})
         }
 
@@ -84,12 +84,17 @@ const deleteOneEntry = async(req, res) => {
     }
 
     try {
-        const date = req.params
-        const {userId} = req.body;
+        const date = req.params.date
+        const user = req.query.user;
+
+         if (!user) {
+            return res.status(400).json({ message: 'Please provide a valid user' });
+            }
+
         const {targetDate, nextDate} = getDateRange(date);
 
         const deletedEntry = await Entry.findOneAndDelete({
-            user: userId, 
+            user: user, 
             date: {
                 $gte: targetDate,
                 $lt: nextDate
@@ -102,7 +107,7 @@ const deleteOneEntry = async(req, res) => {
 
         res.status(200).json({message: 'Entry deleted successfully', deletedEntry});
     }catch(err){
-        res.status(400).json({message: err.message})
+        res.status(500).json({message: err.message})
     }
 }
 

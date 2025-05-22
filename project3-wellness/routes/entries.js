@@ -35,7 +35,7 @@ router.post('/:date',
  * @returns {Error} 400 - Validation error
  * @returns {Error} 404 - Entry not found
  */
-router.put('/', 
+router.put('/:date', 
     validateEntry,
     handleValidationErrors,
     entriesController.updateEntry);
@@ -44,11 +44,12 @@ router.put('/',
  * @route DELETE /entries/{date}
  * @group Entries - Operations about mood entries
  * @param {string} date.path.required - Entry date in ISO format (YYYY-MM-DD)
- * @param {string} userId.body.required - User id
+ * @param {string} user.query.required - User ID
  * @returns {object} 200 - Entry deleted successfully
  * @returns {Error} 400 - Validation error
  * @returns {Error} 404 - Entry not found
  */
+
 router.delete('/:date', 
     validateDelete,
     handleValidationErrors,

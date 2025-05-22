@@ -1,0 +1,44 @@
+### GET all entries
+GET http://localhost:8080/entries
+
+###
+
+### POST - Create new Entry
+POST http://localhost:8080/entries/2025-01-01
+Content-Type: application/json
+
+{
+    "user": "682f667b4e0e05ce48ceeb27",
+    "mood": "5",
+    "exercise": false,
+    "water": "2.5",
+    "sleepHours": "7.5",
+    "bestMemory": "Had lunch with my friend",
+    "gratitude": "My health"
+}
+
+###
+
+### PUT - Update entry
+PUT http://localhost:8080/entries/2025-05-22
+Content-Type: application/json
+
+{
+    "user": "682f667b4e0e05ce48ceeb27",
+    "mood": "4",
+    "exercise": true,
+    "water": "2.0",
+    "sleepHours": "8",
+    "bestMemory": "Walked in the park",
+    "gratitude": "A peaceful day"
+}
+
+###
+
+### DELETE - Remove entry
+DELETE http://localhost:8080/entries/2025-05-22?user=682f667b4e0e05ce48ceeb27
+Content-Type: application/json
+
+{
+    "user": "682f667b4e0e05ce48ceeb27"
+}
