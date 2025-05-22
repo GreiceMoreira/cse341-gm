@@ -1,0 +1,44 @@
+### GET all entries
+GET https://cse341-gm.onrender.com/entries
+
+###
+
+### POST - Create new Entry
+POST https://cse341-gm.onrender.com/entries/2025-01-01
+Content-Type: application/json
+
+{
+    "user": "Greice",
+    "mood": "5",
+    "exercise": "false",
+    "water": "2.5",
+    "sleepHours": "7.5",
+    "bestMemory": "Had lunch with my friend",
+    "gratitude": "My health"
+}
+
+###
+
+### PUT - Update entry
+PUT https://cse341-gm.onrender.com/entries/2025-01-01
+Content-Type: application/json
+
+{
+    "user": "Greice",
+    "mood": "4",
+    "exercise": "true",
+    "water": "2.0",
+    "sleepHours": "8",
+    "bestMemory": "Walked in the park",
+    "gratitude": "A peaceful day"
+}
+
+###
+
+### DELETE - Remove entry
+DELETE https://cse341-gm.onrender.com/entries/2025-01-01
+Content-Type: application/json
+
+{
+    "user": "Greice"
+}
