@@ -8,7 +8,7 @@ POST https://cse341-gm.onrender.com/entries/2025-01-01
 Content-Type: application/json
 
 {
-    "user": "Greice",
+    "user": "682f667b4e0e05ce48ceeb27",
     "mood": "5",
     "exercise": "false",
     "water": "2.5",
@@ -24,7 +24,7 @@ PUT https://cse341-gm.onrender.com/entries/2025-01-01
 Content-Type: application/json
 
 {
-    "user": "Greice",
+    "user": "682f667b4e0e05ce48ceeb27",
     "mood": "4",
     "exercise": "true",
     "water": "2.0",
@@ -40,5 +40,5 @@ DELETE https://cse341-gm.onrender.com/entries/2025-01-01
 Content-Type: application/json
 
 {
-    "user": "Greice"
+    "user": "682f667b4e0e05ce48ceeb27"
 }

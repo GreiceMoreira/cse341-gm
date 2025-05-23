@@ -14,7 +14,9 @@ const entrySchema = new mongoose.Schema({
     mood: {
         type: Number,
         enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        required: true
+        required: true,
+        min: 1,
+        max:10
     },
     exercise: {
         type: String, 
@@ -23,6 +25,7 @@ const entrySchema = new mongoose.Schema({
     water: {
         type: String,
         required: true,
+        max: 15
     }, 
     sleepHours: {
         type: Number,
