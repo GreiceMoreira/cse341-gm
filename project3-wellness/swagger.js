@@ -13,6 +13,9 @@ const doc = {
     host: "cse341-gm.onrender.com",
     schemes: ["https"],
 
+    // host: "localhost:8080",
+    // schemes: ["http"],
+
     definitions: {
         User: {
         id: "123456789",

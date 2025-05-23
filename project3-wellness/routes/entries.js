@@ -1,6 +1,6 @@
 const express = require('express');
-const entriesController = require('../controllers/entrycontroller');
 const router = express.Router();
+const entriesController = require('../controllers/entrycontroller');
 const {validateEntry, validateUpdateEntry} = require('../validations/entryValidation')
 const { handleValidationErrors } = require('../validations/handleValidationErrors');
 const { validateDelete } = require('../validations/deleteValidation');
@@ -25,7 +25,6 @@ router.post('/',
     validateEntry,
     handleValidationErrors,
     entriesController.newEntry);
-
 
 /**
  * @route PUT /entries

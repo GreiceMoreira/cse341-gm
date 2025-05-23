@@ -15,17 +15,7 @@
     "https"
   ],
   "paths": {
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/entries/": {
+    "/entries/": {
       "get": {
         "description": "",
         "responses": {
@@ -37,66 +27,9 @@
           }
         }
       },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                },
-                "mood": {
-                  "example": "any"
-                },
-                "exercise": {
-                  "example": "any"
-                },
-                "water": {
-                  "example": "any"
-                },
-                "sleepHours": {
-                  "example": "any"
-                },
-                "bestMemory": {
-                  "example": "any"
-                },
-                "gratitude": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/entries/{date}": {
       "post": {
         "description": "",
         "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -139,8 +72,10 @@
             "description": "Bad Request"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/entries/{date}": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -155,7 +90,25 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userId": {
+                "user": {
+                  "example": "any"
+                },
+                "mood": {
+                  "example": "any"
+                },
+                "exercise": {
+                  "example": "any"
+                },
+                "water": {
+                  "example": "any"
+                },
+                "sleepHours": {
+                  "example": "any"
+                },
+                "bestMemory": {
+                  "example": "any"
+                },
+                "gratitude": {
                   "example": "any"
                 }
               }
@@ -171,6 +124,39 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -187,66 +173,9 @@
           }
         }
       },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userId": {
-                  "example": "any"
-                },
-                "mood": {
-                  "example": "any"
-                },
-                "exercise": {
-                  "example": "any"
-                },
-                "water": {
-                  "example": "any"
-                },
-                "sleepHours": {
-                  "example": "any"
-                },
-                "bestMemory": {
-                  "example": "any"
-                },
-                "gratitude": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/{date}": {
       "post": {
         "description": "",
         "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -289,8 +218,10 @@
             "description": "Bad Request"
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/{date}": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -305,7 +236,25 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userId": {
+                "user": {
+                  "example": "any"
+                },
+                "mood": {
+                  "example": "any"
+                },
+                "exercise": {
+                  "example": "any"
+                },
+                "water": {
+                  "example": "any"
+                },
+                "sleepHours": {
+                  "example": "any"
+                },
+                "bestMemory": {
+                  "example": "any"
+                },
+                "gratitude": {
                   "example": "any"
                 }
               }
@@ -321,6 +270,39 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
