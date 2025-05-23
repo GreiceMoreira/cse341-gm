@@ -9,8 +9,8 @@ Content-Type: application/json
 
 {
     "user": "682f667b4e0e05ce48ceeb27",
-    "date":"2025-08-12",
-    "mood": "5",
+    "date":"2025-08-13",
+    "mood": "10",
     "exercise": false,
     "water": "2.5",
     "sleepHours": "7.5",
@@ -37,7 +37,7 @@ Content-Type: application/json
 ###
 
 ### DELETE - Remove entry
-DELETE http://localhost:8080/entries/2025-05-22?user=682f667b4e0e05ce48ceeb27
+DELETE http://localhost:8080/entries/2025-08-12?user=682f667b4e0e05ce48ceeb27
 Content-Type: application/json
 
 {

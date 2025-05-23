@@ -35,6 +35,11 @@ const newEntry = async (req, res) => {
         const newEntry = await entry.save();
         res.status(201).json(newEntry);
     } catch (err) {
+        if(err.code === 11000){
+            return res.status(409).json({
+                message: "An entry for this day already exists. You can use PUT to update the existing entry."
+            })
+        }
         res.status(400).json({ message: err.message });
     }
 };

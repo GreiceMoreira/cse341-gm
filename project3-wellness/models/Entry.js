@@ -10,6 +10,8 @@ const entrySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
         required: true,
+        unique: true,
+
     },
     mood: {
         type: Number,
@@ -19,7 +21,7 @@ const entrySchema = new mongoose.Schema({
         max:10
     },
     exercise: {
-        type: String, 
+        type: Boolean, 
         required: true
     },
     water: {
@@ -43,6 +45,8 @@ const entrySchema = new mongoose.Schema({
     }
 
 })
+
+entrySchema.index({ user: 1, date: 1}, {unique: true});
 
 const Entry = mongoose.model('Entry', entrySchema);
 module.exports = Entry;
