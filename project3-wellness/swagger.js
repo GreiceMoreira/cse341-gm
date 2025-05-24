@@ -10,11 +10,11 @@ const doc = {
           },
           version: "1.0.0"
     },
-    host: "cse341-gm.onrender.com",
-    schemes: ["https"],
+    // host: "cse341-gm.onrender.com",
+    // schemes: ["https"],
 
-    // host: "localhost:8080",
-    // schemes: ["http"],
+    host: "localhost:8080",
+    schemes: ["http"],
 
     definitions: {
         User: {

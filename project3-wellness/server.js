@@ -7,18 +7,21 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 const entryRoutes = require('./routes/entries');
-const swaggerRoute = require('./routes/swagger')
+const swaggerRoute = require('./routes/swagger');
+const accountRoutes = require('./routes/accounts');
 
 app
     .use(cors())
     .use(express.json())
     .use(swaggerRoute)
+    .use('/users', accountRoutes)
     .use('/entries', entryRoutes)
 
 
-connectDB().then(()=> {
-    app.listen(port, () => {
-        console.log('Web Server is listening at port ', port)
+connectDB()
+    .then(()=> {
+        app.listen(port, () => {
+            console.log('Web Server is listening at port ', port)
     })
 })
 

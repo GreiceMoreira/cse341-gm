@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const { hashPassword } = require('../utils/hashPassword');
 
 const userSchema = new mongoose.Schema ({
     email: {
@@ -16,6 +18,8 @@ const userSchema = new mongoose.Schema ({
     },
     age: {
         type: Number,
+        min: 16,
+        max: 110,
     },
     avatar: {
         type: Number,
@@ -26,6 +30,17 @@ const userSchema = new mongoose.Schema ({
         default: Date.now
     }
 
+})
+userSchema.pre('save', async function(next){
+    if(!this.isModified('password')){
+        return next();
+    }
+    try{
+        this.password = await hashPassword(this.password);
+        next();
+    }catch (err) {
+        next(err);
+    }
 })
 
 const User = mongoose.model ('User', userSchema)
