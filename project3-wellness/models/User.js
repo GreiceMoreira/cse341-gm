@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const { hashPassword } = require('../utils/hashPassword');
 
 const userSchema = new mongoose.Schema ({
@@ -25,7 +24,7 @@ const userSchema = new mongoose.Schema ({
         type: Number,
         enum: [1, 2, 3],
     },
-      createdAt: {
+    createdAt: {
         type: Date,
         default: Date.now
     }

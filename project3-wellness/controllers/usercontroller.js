@@ -20,9 +20,9 @@ const getAccount = async(req, res) => {
 }
 
 const newAccount = async(req , res) => {
-
+    const { email, password, name, age, avatar } = req.body;
     try{
-        const userData = await prepareUserData(req.body);
+        const userData = await prepareUserData({ email, password, name, age, avatar });
         const user = new User(userData)
 
         const newUser = await user.save();

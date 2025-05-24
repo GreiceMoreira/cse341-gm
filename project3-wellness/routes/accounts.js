@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/usercontroller');
+const {validateUser} = require('../validations/userValidation')
+const {handleValidationErrors} = require('../validations/handleValidationErrors');
+const {validateUserDelete} = require('../validations/deleteValidation')
 
 /**
  * @route GET /users/{id}
@@ -15,15 +18,18 @@ router.get('/:id', userController.getAccount);
 
 
 /**
- * @route POST /users/register
+ * @route POST /users
  * @group Users - Operations about users
  * @summary Create a new user account
- * @param {User.model} user.body.required - User data (email, password, name, age, avatar)
- * @returns {User.model} 201 - Created user object
+ * @param {User} request.body.required - User data (email, password, name, age, avatar)
+ * @returns {User} 201 - Created user object
  * @returns {Error} 400 - Bad request (validation or save error)
+ * @returns {Error} 500 - Internal server error
  */
-
-router.post('/register', userController.newAccount);
+router.post('/', 
+    validateUser,
+    handleValidationErrors,
+    userController.newAccount);
 
 /**
  * @route PUT /users/{id}
@@ -35,7 +41,10 @@ router.post('/register', userController.newAccount);
  * @returns {Error} 400 - No user found or bad request
  * @returns {Error} 500 - Internal server error
  */
-router.put('/:id', userController.updateUser);
+router.put('/:id', 
+    validateUser,
+    handleValidationErrors,
+    userController.updateUser);
 
 /**
  * @route DELETE /users/{id}
@@ -49,7 +58,10 @@ router.put('/:id', userController.updateUser);
  * @returns {Error} 500 - Internal server error
  */
 
-router.delete('/:id', userController.deleteMyUser);
+router.delete('/:id', 
+    validateUserDelete,
+    handleValidationErrors,
+    userController.deleteMyUser);
 
 module.exports = router;
 

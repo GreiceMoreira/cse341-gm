@@ -10,20 +10,20 @@ const doc = {
           },
           version: "1.0.0"
     },
-    // host: "cse341-gm.onrender.com",
-    // schemes: ["https"],
+    host: "cse341-gm.onrender.com",
+    schemes: ["https"],
 
-    host: "localhost:8080",
-    schemes: ["http"],
+    // host: "localhost:8080",
+    // schemes: ["http"],
 
     definitions: {
         User: {
-        id: "123456789",
-        email: "user@example.com",
-        password: "strongpassword123",
-        name: "Jane Doe",
-        age: 30,
-        avatar: 1
+            id: "123456789",
+            email: "user@example.com",
+            password: "strongpassword123",
+            name: "Jane Doe",
+            age: 30,
+            avatar: 1
         },
         Entry: {
             user: "userId123",
@@ -45,6 +45,6 @@ const doc = {
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./server.js']; 
+const endpointsFiles = ['./server.js'];//, './routes/accounts.js']; 
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

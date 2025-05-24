@@ -11,7 +11,6 @@ const entrySchema = new mongoose.Schema({
         default: Date.now,
         required: true,
         unique: true,
-
     },
     mood: {
         type: Number,

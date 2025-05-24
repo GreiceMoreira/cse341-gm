@@ -1,0 +1,41 @@
+### GET uder by ID
+GET https://cse341-gm.onrender.com/users/68320cae83ef7c3a2e1f4bb1
+
+
+### POST - Create new User
+POST https://cse341-gm.onrender.com/users/register
+Content-Type: application/json
+
+{
+    "email": "dath-vader@teste.com",
+    "password":"teste123",
+    "name": "Fulano",
+    "age": 16,
+    "avatar": "2"
+
+}
+
+###
+
+### PUT - Update new User
+PUT https://cse341-gm.onrender.com/users/68320cae83ef7c3a2e1f4bb1
+Content-Type: application/json
+
+{
+    "email": "fulano@teste.com",
+    "password":"teste123",
+    "name": "Beltrano",
+    "age": 16,
+    "avatar": "2"
+
+}
+
+###
+
+### DELETE - Remove user
+DELETE https://cse341-gm.onrender.com/68320cae83ef7c3a2e1f4bb1
+Content-Type: application/json
+
+{
+    "password": "teste123"
+}

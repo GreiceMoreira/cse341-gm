@@ -3,7 +3,7 @@ const router = express.Router();
 const entriesController = require('../controllers/entrycontroller');
 const {validateEntry, validateUpdateEntry} = require('../validations/entryValidation')
 const { handleValidationErrors } = require('../validations/handleValidationErrors');
-const { validateDelete } = require('../validations/deleteValidation');
+const { validateEntryDelete } = require('../validations/deleteValidation');
 
 /**
  * @route GET /entries
@@ -50,7 +50,7 @@ router.put('/:date',
  */
 
 router.delete('/:date', 
-    validateDelete,
+    validateEntryDelete,
     handleValidationErrors,
     entriesController.deleteOneEntry);
 
