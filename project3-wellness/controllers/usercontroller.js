@@ -33,9 +33,10 @@ const newAccount = async(req , res) => {
 }
 
 const updateUser = async(req , res) => {
+    const { email, password, name, age, avatar } = req.body;
     try{
         const {id} = req.params;
-        const updateData = await prepareUserData(req.body);
+        const updateData = await prepareUserData({ email, password, name, age, avatar });
 
         const updatedUser = await User.findByIdAndUpdate(
             id,
