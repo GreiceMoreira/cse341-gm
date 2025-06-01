@@ -36,6 +36,13 @@ const doc = {
             gratitude: "My health"
         }
     },
+    securityDefinitions: {
+    cookieAuth: {
+        type: "apiKey",
+        in: "cookie",
+        name: "connect.sid"
+    }
+    },
 
     externalDocs: {
         description: "GitHub Repository",

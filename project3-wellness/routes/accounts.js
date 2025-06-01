@@ -4,17 +4,21 @@ const userController = require('../controllers/usercontroller');
 const {validateUser} = require('../validations/userValidation')
 const {handleValidationErrors} = require('../validations/handleValidationErrors');
 const {validateUserDelete} = require('../validations/deleteValidation')
+const {isAuthenticated} = require('../middleware/authenticate')
 
 /**
  * @route GET /users/{id}
  * @group Users - Operations about users
  * @summary Get user details by ID
+ * @security cookieAuth
  * @param {string} id.path.required - User ID
  * @returns {object} 200 - User object
  * @returns {Error} 400 - User not identified
  * @returns {Error} 500 - Server error
  */
-router.get('/:id', userController.getAccount);
+router.get('/:id',
+    isAuthenticated,
+    userController.getAccount);
 
 
 /**
@@ -35,6 +39,7 @@ router.post('/',
  * @route PUT /users/{id}
  * @group Users - Operations about users
  * @summary Update an existing user
+ * @security cookieAuth
  * @param {string} id.path.required - User ID
  * @param {User.model} request.body.required - Updated user data (email, password, name, age, avatar)
  * @returns {User.model} 200 - Updated user object
@@ -42,6 +47,7 @@ router.post('/',
  * @returns {Error} 500 - Internal server error
  */
 router.put('/:id', 
+    isAuthenticated,
     validateUser,
     handleValidationErrors,
     userController.updateUser);
@@ -50,6 +56,7 @@ router.put('/:id',
  * @route DELETE /users/{id}
  * @group Users - Operations about users
  * @summary Delete a user (requires password)
+ * @security cookieAuth
  * @param {string} id.path.required - User ID
  * @param {object} request.body.required - Object with password { password: string }
  * @returns {object} 200 - Success message
@@ -58,7 +65,8 @@ router.put('/:id',
  * @returns {Error} 500 - Internal server error
  */
 
-router.delete('/:id', 
+router.delete('/:id',
+    isAuthenticated, 
     validateUserDelete,
     handleValidationErrors,
     userController.deleteMyUser);
