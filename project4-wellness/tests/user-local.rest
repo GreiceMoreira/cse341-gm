@@ -1,0 +1,41 @@
+### GET uder by ID
+GET http://localhost:8080/users/683232e348cf0f1c1bc2097e
+
+
+### POST - Create new User
+POST http://localhost:8080/users/
+Content-Type: application/json
+
+{
+    "email": "dath-vader@teste.com",
+    "password":"teste123",
+    "name": "Fulano",
+    "age": 16,
+    "avatar": "2"
+
+}
+
+###
+
+### PUT - Update new User
+PUT http://localhost:8080/users/683232e348cf0f1c1bc2097e
+Content-Type: application/json
+
+{
+    "email": "fulano@teste.com",
+    "password":"teste123",
+    "name": "Beltrano",
+    "age": 16,
+    "avatar": "2"
+
+}
+
+###
+
+### DELETE - Remove user
+DELETE http://localhost:8080/users/68320cae83ef7c3a2e1f4bb1
+Content-Type: application/json
+
+{
+    "password": "teste123"
+}

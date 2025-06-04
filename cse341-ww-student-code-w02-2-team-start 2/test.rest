@@ -1,0 +1,11 @@
+### Get all temples
+GET http://localhost:8080/
+
+### Get Abidjan Ivory Coast Temple
+GET http://localhost:8080/61a921f6028954d4f0319e6e
+
+### Get Accra Ghana Temple
+GET http://localhost:8080/61a921f6028954d4f0319e6f
+
+### Get Alabang Philippines Temple
+GET http://localhost:8080/61a921f6028954d4f0319e71
