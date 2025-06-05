@@ -4,8 +4,8 @@ const socialEntrySchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   date: { type: Date, default: Date.now, required: true, unique: true },
 
-  interactionsCount: { type: Number, min: 0, required: true },
-  socialActivities: { type: [String], required: true }, // e.g., ["Lunch with friend", "Call with family"]
+  interactionsCount: { type: Number, min: 0, required: false },
+  socialActivities: { type: [String], required: false }, // e.g., ["Lunch with friend", "Call with family"]
 
  interactionType: {
     type: [String],
@@ -16,19 +16,17 @@ const socialEntrySchema = new mongoose.Schema({
   interactionQuality: {
     type: String,
     enum: ['Very good', 'Good', 'Neutral', 'Bad', 'Very bad'],
-    required: true
+    required: false
   },
 
   energyAfterSocializing: {
     type: String,
     enum: ['Refreshed', 'Normal', 'Tired', 'Anxious'],
-    required: true
+    required: false
   },
 
-  socialMood: { type: String, required: true }, // "Connected", "Lonely", "Happy"
-  gratitude: { type: String, required: false },
+  socialMood: { type: String, required: false } // "Connected", "Lonely", "Happy"
 
-  plannedInteractionTomorrow: { type: Boolean, default: false }
 });
 
 socialEntrySchema.index({ user: 1, date: 1 }, { unique: true });

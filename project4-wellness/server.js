@@ -11,7 +11,10 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const app = express();
 const port = process.env.PORT || 8080;
 
-const entryRoutes = require('./routes/entries');
+const socialRoutes = require('./routes/social');
+const spiritualRoutes = require('./routes/spiritual');
+const intellectualRoutes = require('./routes/intellectual');
+const physicalRoutes = require('./routes/physical');
 const swaggerRoute = require('./routes/swagger');
 const accountRoutes = require('./routes/accounts');
 
@@ -27,7 +30,10 @@ app
     .use(express.json())
     .use(swaggerRoute)
     .use('/users', accountRoutes)
-    .use('/entries', entryRoutes)
+    .use('/social', socialRoutes)
+    .use('/spiritual', spiritualRoutes)
+    .use('/physical', physicalRoutes)
+    .use('/intellectual', intellectualRoutes)
 
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,

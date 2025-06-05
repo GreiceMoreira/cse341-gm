@@ -82,3 +82,25 @@ module.exports = {
     updateUser,
     deleteMyUser
 }
+
+
+
+
+// ○
+// POST /user/login – Login using email and password
+// ○
+// GET /user/logout – Logout the authenticated user
+// ○
+// GET /user/profile – Get the authenticated user’s profile
+// ○
+// PUT /user/profile – Update the authenticated user’s profile
+// ○
+// DELETE /user/profile – Delete the authenticated user’s account
+// ○
+// POST /user/oauth/google – Login via Google OAuth
+// ○
+// GET /user/all – (admin only) List all users
+// ○
+// DELETE /user/{userId} – (admin only) Delete a specific user
+// ○
+// PUT /user/{userId}/role – (admin only) Update the user’s role (e.g., regular → admin)

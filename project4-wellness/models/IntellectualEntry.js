@@ -5,7 +5,7 @@ const intellectualEntrySchema = new mongoose.Schema({
   date: { type: Date, default: Date.now, required: true, unique: true },
 
   studyMinutes: { type: Number, min: 0, required: true },
-  booksRead: { type: Number, min: 0, required: false },
+  pagesBooksRead: { type: Number, min: 0, required: false },
   newSkillsPracticed: { type: [String], required: false },
 
   mentalState: {
