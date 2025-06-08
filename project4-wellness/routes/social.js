@@ -4,6 +4,7 @@ const socialController = require('../controllers/socialcontroller');
 const {handleValidationErrors} = require('../validations/handleValidationErrors');
 const { validateEntryDelete } = require('../validations/deleteValidation');
 const { validateSocialEntryCreate, validateSocialEntryUpdate } = require('../validations/entryValidation');
+const { param } = require('express-validator');
 
 // GET /entries/social – List all social entries of the authenticated user
 router.get('/', 

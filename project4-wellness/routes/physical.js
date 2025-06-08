@@ -3,7 +3,8 @@ const router = express.Router();
 const physicalController = require('../controllers/physicalcontroller');
 const {handleValidationErrors} = require('../validations/handleValidationErrors');
 const { validateEntryDelete } = require('../validations/deleteValidation');
-const { validatephysicalEntryCreate, validatephysicalEntryUpdate } = require('../validations/entryValidation');
+const { validatePhysicalEntryCreate, validatePhysicalEntryUpdate } = require('../validations/entryValidation');
+const { param } = require('express-validator');
 
 // GET /entries/physical – List all physical entries of the authenticated user
 router.get('/', 
@@ -16,13 +17,13 @@ router.get('/:date',
 
 // POST /entries/physical – Create a new physical entry
 router.post('/',
-    validatephysicalEntryCreate, 
+    validatePhysicalEntryCreate, 
     handleValidationErrors, 
     physicalController.createPhysicalEntry);
 
 // PUT /entries/physical/:date – Update a specific physical entry
 router.put('/:date', 
-    validatephysicalEntryUpdate,
+    validatePhysicalEntryUpdate,
     handleValidationErrors,
     physicalController.updatePhysicalEntry);
 

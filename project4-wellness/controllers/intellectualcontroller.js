@@ -17,10 +17,19 @@ const extractIntellectualFields = (body) => ({
   distractionsCount: body.distractionsCount
 });
 
+
+const getAllIntellectualEntries = (req, res) => getAllEntries(IntellectualEntry, req, res);
+const getIntellectualEntryByDate = (req, res) => getEntryByDate(IntellectualEntry, req, res);
+const deleteIntellectualEntryByDate = (req, res) => deleteEntryByDate(IntellectualEntry, req, res);
+const createIntellectualEntry = createEntryHandler(IntellectualEntry, extractIntellectualFields);
+const updateIntellectualEntry = updateEntryHandler(IntellectualEntry, extractIntellectualFields);
+
 module.exports = {
-  getAllIntellectualEntries: (req, res) => getAllEntries(IntellectualEntry, req, res),
-  getIntellectualEntryByDate: (req, res) => getEntryByDate(IntellectualEntry, req, res),
-  deleteIntellectualEntryByDate: (req, res) => deleteEntryByDate(IntellectualEntry, req, res),
-  createIntellectualEntry: createEntryHandler(IntellectualEntry, extractIntellectualFields),
-  updateIntellectualEntry: updateEntryHandler(IntellectualEntry, extractIntellectualFields)
+  getAllIntellectualEntries,
+  getIntellectualEntryByDate,
+  deleteIntellectualEntryByDate,
+  createIntellectualEntry,
+  updateIntellectualEntry
 };
+
+

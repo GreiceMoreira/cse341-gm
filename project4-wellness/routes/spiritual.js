@@ -4,6 +4,7 @@ const spiritualcontroller = require('../controllers/spiritualcontroller');
 const {handleValidationErrors} = require('../validations/handleValidationErrors');
 const { validateEntryDelete } = require('../validations/deleteValidation');
 const { validateSpiritualEntryCreate, validateSpiritualEntryUpdate } = require('../validations/entryValidation');
+const { param } = require('express-validator');
 
 // GET /entries/spiritual – List all spiritual entries of the authenticated user
 router.get('/', 

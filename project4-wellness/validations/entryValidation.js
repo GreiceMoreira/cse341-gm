@@ -94,11 +94,93 @@ const validateSpiritualEntryUpdate = [
     .withMessage('journal must be a string')
 ];
 
+const validateIntellectualEntryCreate = [
+  body('user').notEmpty()
+    .withMessage('User ID is required'),
+  body('date').isISO8601().toDate()
+    .withMessage('Valid date (YYYY-MM-DD) is required'),
+  body('studyMinutes').isInt({ min: 0 })
+    .withMessage('studyMinutes must be a number greater than or equal to 0'),
+  body('pagesBooksRead').isInt({ min: 0 })
+    .withMessage('pagesBooksRead must be a number greater than or equal to 0'),
+  body('newSkillsPracticed').optional().isString()
+    .withMessage('newSkillsPracticed must be a string'),
+  body('mentalState').optional().isString()
+    .withMessage('mentalState must be a string'),
+  body('notes').optional().isString()
+    .withMessage('notes must be a string'),
+  body('motivationLevel').isInt({ min: 0, max: 10 })
+    .withMessage('motivationLevel must be an integer between 0 and 10'),
+  body('distractionsCount').isInt({ min: 0 })
+    .withMessage('distractionsCount must be a number greater than or equal to 0'),
+];
 
+const validateIntellectualEntryUpdate = [
+  body('user').notEmpty()
+    .withMessage('User ID is required'),
+  param('date').isISO8601().toDate()
+    .withMessage('Valid date (YYYY-MM-DD) is required'),
+  body('studyMinutes').isInt({ min: 0 })
+    .withMessage('studyMinutes must be a number greater than or equal to 0'),
+  body('pagesBooksRead').isInt({ min: 0 })
+    .withMessage('pagesBooksRead must be a number greater than or equal to 0'),
+  body('newSkillsPracticed').optional().isString()
+    .withMessage('newSkillsPracticed must be a string'),
+  body('mentalState').optional().isString()
+    .withMessage('mentalState must be a string'),
+  body('notes').optional().isString()
+    .withMessage('notes must be a string'),
+  body('motivationLevel').isInt({ min: 0, max: 10 })
+    .withMessage('motivationLevel must be an integer between 0 and 10'),
+  body('distractionsCount').isInt({ min: 0 })
+    .withMessage('distractionsCount must be a number greater than or equal to 0'),
+];
+
+const validatePhysicalEntryCreate = [
+  body('user').notEmpty()
+    .withMessage('User ID is required'),
+  body('date').isISO8601().toDate()
+    .withMessage('Valid date (YYYY-MM-DD) is required'),
+  body('mood').isInt({ min: 1, max: 10 })
+    .withMessage('Mood must be an integer between 1 and 10'),
+  body('exercise').isBoolean()
+    .withMessage('Exercise must be true or false'),
+  body('water').isString().isLength({ max: 15 })
+    .withMessage('Water must be a string with max 15 characters'),
+  body('sleepHours').isFloat({ min: 0, max: 24 })
+    .withMessage('Sleep hours must be a number between 0 and 24'),
+  body('healthyEating').isBoolean()
+    .withMessage('Healthy eating must be true or false'),
+  body('homeCare').isString().isLength({ max: 100 })
+    .withMessage('Home care must be a string with max 100 characters'),
+];
+
+const validatePhysicalEntryUpdate = [
+  body('user').notEmpty()
+    .withMessage('User ID is required'),
+  param('date').isISO8601().toDate()
+    .withMessage('Valid date (YYYY-MM-DD) is required'),
+  body('mood').isInt({ min: 1, max: 10 })
+    .withMessage('Mood must be an integer between 1 and 10'),
+  body('exercise').isBoolean()
+    .withMessage('Exercise must be true or false'),
+  body('water').isString().isLength({ max: 15 })
+    .withMessage('Water must be a string with max 15 characters'),
+  body('sleepHours').isFloat({ min: 0, max: 24 })
+    .withMessage('Sleep hours must be a number between 0 and 24'),
+  body('healthyEating').isBoolean()
+    .withMessage('Healthy eating must be true or false'),
+  body('homeCare').isString().isLength({ max: 100 })
+    .withMessage('Home care must be a string with max 100 characters'),
+];
 
 module.exports = {
     validateSocialEntryCreate,
     validateSocialEntryUpdate,
     validateSpiritualEntryCreate, 
-    validateSpiritualEntryUpdate 
+    validateSpiritualEntryUpdate, 
+    validateIntellectualEntryCreate, 
+    validateIntellectualEntryUpdate, 
+    validatePhysicalEntryCreate, 
+    validatePhysicalEntryUpdate 
 }

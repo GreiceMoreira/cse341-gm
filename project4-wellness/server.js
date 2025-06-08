@@ -6,8 +6,6 @@ const passport = require('passport');
 const session = require('express-session');
 const GitHubStrategy = require('passport-github2').Strategy;
 
-
-
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -35,42 +33,42 @@ app
     .use('/physical', physicalRoutes)
     .use('/intellectual', intellectualRoutes)
 
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL
-}, 
-function(accessToken, refreshToken, profile, done){
-    return done(null, profile);
-}));
+// passport.use(new GitHubStrategy({
+//     clientID: process.env.GITHUB_CLIENT_ID,
+//     clientSecret: process.env.GITHUB_CLIENT_SECRET,
+//     callbackURL: process.env.CALLBACK_URL
+// }, 
+// function(accessToken, refreshToken, profile, done){
+//     return done(null, profile);
+// }));
 
-passport.serializeUser((user, done)=>{
-    done(null, user)
-})
-passport.deserializeUser((user, done)=>{
-    done(null, user)
-})
+// passport.serializeUser((user, done)=>{
+//     done(null, user)
+// })
+// passport.deserializeUser((user, done)=>{
+//     done(null, user)
+// })
 
-app.get('/', (req, res) => {
-    res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : `Logged Out`)
-});
+// app.get('/', (req, res) => {
+//     res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : `Logged Out`)
+// });
 
-app.get('/github', passport.authenticate('github'));
+// app.get('/github', passport.authenticate('github'));
 
-app.get('/github/callback', passport.authenticate('github', {
-    failureRedirect: '/api-docs', session:false}),
-    (req, res) => {
-        req.session.user = req.user;
-        res.redirect('/');
-    });
+// app.get('/github/callback', passport.authenticate('github', {
+//     failureRedirect: '/api-docs', session:false}),
+//     (req, res) => {
+//         req.session.user = req.user;
+//         res.redirect('/');
+//     });
 
-app.get('/logout', (req, res, next) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        req.session.user = undefined
-        res.redirect('/');
-    });
-});
+// app.get('/logout', (req, res, next) => {
+//     req.logout(function(err) {
+//         if (err) { return next(err); }
+//         req.session.user = undefined
+//         res.redirect('/');
+//     });
+// });
 
 
 connectDB()
