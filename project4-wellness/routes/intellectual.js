@@ -31,10 +31,14 @@ router.get('/:date',
 // POST /entries/Intellectual – Create a new Intellectual entry
 /**
  * @route POST /entries/Intellectual
- * @group IntellectualEntries - Operations about intellectual entries
- * @param {IntellectualEntry.model} body.body.required - Intellectual entry info
- * @returns {IntellectualEntry.model} 201 - Intellectual entry created
- * @returns {Error} 400 - Invalid input
+ * @group Intellectual Entries - Operations related to intellectual activities
+ * @param {string} user.body.required
+ * @param {string} date.body.required
+ * @param {number} studyMinutes.body.required
+ * @param {string} book.body.required
+ * @param {string} notes.body - Optional notes
+ * @returns {object} 201 - Created entry
+ * @returns {Error} 400 - Validation error
  */
 router.post('/',
     validateIntellectualEntryCreate, 
