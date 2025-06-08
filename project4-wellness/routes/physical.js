@@ -31,10 +31,17 @@ router.get('/:date',
 // POST /entries/physical – Create a new physical entry
 /**
  * @route POST /entries/Physical
- * @group PhysicalEntries - Operations about Physical entries
- * @param {PhysicalEntry.model} body.body.required - Physical entry info
- * @returns {PhysicalEntry.model} 201 - Physical entry created
- * @returns {Error} 400 - Invalid input
+ * @group Physical Entries - Operations related to physical health tracking
+ * @param {string} user.body.required - User ID
+ * @param {string} date.body.required - Entry date in YYYY-MM-DD format
+ * @param {integer} mood.body.required - Mood level from 1 to 10
+ * @param {boolean} exercise.body.required - Did exercise today?
+ * @param {string} water.body.required - Water intake description
+ * @param {number} sleepHours.body.required - Hours of sleep
+ * @param {boolean} healthyEating.body.required - Ate healthy?
+ * @param {string} homeCare.body.required - Notes about home care
+ * @returns {object} 201 - Created entry object
+ * @returns {Error} 400 - Validation error
  */
 router.post('/',
     validatePhysicalEntryCreate, 
