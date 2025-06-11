@@ -24,99 +24,254 @@
   "paths": {
     "/users/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user details by ID",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "User ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "User not identified"
           },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Server error"
           }
-        }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update an existing user",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "name": {
-                  "example": "any"
-                },
-                "age": {
-                  "example": "any"
-                },
-                "avatar": {
-                  "example": "any"
-                }
-              }
-            }
+            "type": "string",
+            "description": "User ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Updated user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "No user found or bad request"
           },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
           }
         }
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete a user (requires password)",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success message"
           },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Incorrect password"
+          },
+          "404": {
+            "description": "No user found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "example": "any"
-                }
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "password"
+                ]
               }
             }
+          }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user account",
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad request (validation or save error)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/social/": {
+      "get": {
+        "tags": [
+          "SocialEntries"
+        ],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SocialEntries"
+        ],
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/SocialEntry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/social/{date}": {
+      "get": {
+        "tags": [
+          "SocialEntries"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Date of the entry (YYYY-MM-DD)"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SocialEntries"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Date of the entry to update (YYYY-MM-DD)"
           }
         ],
         "responses": {
@@ -125,9 +280,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -135,105 +287,35 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
-      }
-    },
-    "/users/": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "name": {
-                  "example": "any"
-                },
-                "age": {
-                  "example": "any"
-                },
-                "avatar": {
-                  "example": "any"
-                }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/SocialEntry"
               }
             }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/social/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/social/{date}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
           }
         }
       },
       "delete": {
+        "tags": [
+          "SocialEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Entry date in ISO format (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
             "required": true,
             "type": "string"
           }
@@ -247,6 +329,9 @@
     },
     "/spiritual/": {
       "get": {
+        "tags": [
+          "SpiritualEntries"
+        ],
         "description": "",
         "responses": {
           "default": {
@@ -255,23 +340,46 @@
         }
       },
       "post": {
+        "tags": [
+          "SpiritualEntries"
+        ],
         "description": "",
         "responses": {
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/SpiritualEntry"
+              }
+            }
           }
         }
       }
     },
     "/spiritual/{date}": {
       "get": {
+        "tags": [
+          "SpiritualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Date of the entry (YYYY-MM-DD)"
           }
         ],
         "responses": {
@@ -281,27 +389,61 @@
         }
       },
       "put": {
+        "tags": [
+          "SpiritualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Date of the entry to update (YYYY-MM-DD)"
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/SpiritualEntry"
+              }
+            }
           }
         }
       },
       "delete": {
+        "tags": [
+          "SpiritualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Entry date in ISO format (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
             "required": true,
             "type": "string"
           }
@@ -315,6 +457,9 @@
     },
     "/physical/": {
       "get": {
+        "tags": [
+          "PhysicalEntries"
+        ],
         "description": "",
         "responses": {
           "default": {
@@ -323,23 +468,46 @@
         }
       },
       "post": {
+        "tags": [
+          "PhysicalEntries"
+        ],
         "description": "",
         "responses": {
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/PhysicalEntry"
+              }
+            }
           }
         }
       }
     },
     "/physical/{date}": {
       "get": {
+        "tags": [
+          "PhysicalEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Date of the entry (YYYY-MM-DD)"
           }
         ],
         "responses": {
@@ -349,27 +517,61 @@
         }
       },
       "put": {
+        "tags": [
+          "PhysicalEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Entry date (YYYY-MM-DD)"
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/PhysicalEntry"
+              }
+            }
           }
         }
       },
       "delete": {
+        "tags": [
+          "PhysicalEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Entry date (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
             "required": true,
             "type": "string"
           }
@@ -383,6 +585,9 @@
     },
     "/intellectual/": {
       "get": {
+        "tags": [
+          "IntellectualEntries"
+        ],
         "description": "",
         "responses": {
           "default": {
@@ -391,182 +596,9 @@
         }
       },
       "post": {
-        "description": "",
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/intellectual/{date}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+        "tags": [
+          "IntellectualEntries"
         ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "name": {
-                  "example": "any"
-                },
-                "age": {
-                  "example": "any"
-                },
-                "avatar": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/": {
-      "post": {
         "description": "",
         "responses": {
           "201": {
@@ -574,27 +606,36 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
           }
-        }
-      },
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/IntellectualEntry"
+              }
+            }
           }
         }
       }
     },
-    "/{date}": {
+    "/intellectual/{date}": {
       "get": {
+        "tags": [
+          "IntellectualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Date of the entry (YYYY-MM-DD)"
           }
         ],
         "responses": {
@@ -604,27 +645,61 @@
         }
       },
       "put": {
+        "tags": [
+          "IntellectualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Date of the entry to update (YYYY-MM-DD)"
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/IntellectualEntry"
+              }
+            }
           }
         }
       },
       "delete": {
+        "tags": [
+          "IntellectualEntries"
+        ],
         "description": "",
         "parameters": [
           {
             "name": "date",
             "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Entry date in ISO format (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
             "required": true,
             "type": "string"
           }
@@ -667,7 +742,7 @@
         }
       }
     },
-    "Entry": {
+    "SocialEntry": {
       "type": "object",
       "properties": {
         "user": {
@@ -676,31 +751,134 @@
         },
         "date": {
           "type": "string",
-          "example": "2025-05-20"
+          "example": "2025-06-07"
+        },
+        "socialInteraction": {
+          "type": "number",
+          "example": 7
+        },
+        "connection": {
+          "type": "string",
+          "example": "Had lunch with a friend"
+        }
+      }
+    },
+    "PhysicalEntry": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "userId123"
+        },
+        "date": {
+          "type": "string",
+          "example": "2025-06-07"
         },
         "mood": {
           "type": "number",
-          "example": 4
+          "example": 8
         },
         "exercise": {
           "type": "boolean",
           "example": true
         },
         "water": {
-          "type": "number",
-          "example": 8
+          "type": "string",
+          "example": "2 liters"
         },
         "sleepHours": {
           "type": "number",
           "example": 7.5
         },
-        "bestMemory": {
-          "type": "string",
-          "example": "Had lunch with my friend"
+        "healthyEating": {
+          "type": "boolean",
+          "example": true
         },
-        "gratitude": {
+        "homeCare": {
           "type": "string",
-          "example": "My health"
+          "example": "Cleaned the kitchen and did laundry"
+        }
+      }
+    },
+    "SpiritualEntry": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "userId123"
+        },
+        "date": {
+          "type": "string",
+          "example": "2025-06-07"
+        },
+        "prayerTime": {
+          "type": "string",
+          "example": "Morning and night"
+        },
+        "scriptureStudyMinutes": {
+          "type": "number",
+          "example": 30
+        },
+        "comeFollowMeStudy": {
+          "type": "boolean",
+          "example": true
+        },
+        "sacramentMeeting": {
+          "type": "boolean",
+          "example": true
+        },
+        "ministering": {
+          "type": "boolean",
+          "example": false
+        },
+        "templeAttendance": {
+          "type": "boolean",
+          "example": true
+        },
+        "spiritualFeeling": {
+          "type": "string",
+          "example": "Peaceful and uplifted"
+        },
+        "journal": {
+          "type": "string",
+          "example": "Felt inspired after reading Alma 32"
+        }
+      }
+    },
+    "IntellectualEntry": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "example": "userId123"
+        },
+        "date": {
+          "type": "string",
+          "example": "2025-06-07"
+        },
+        "studyTime": {
+          "type": "number",
+          "example": 120
+        },
+        "courses": {
+          "type": "string",
+          "example": "BYU Software Development"
+        },
+        "booksRead": {
+          "type": "string",
+          "example": "Atomic Habits"
+        },
+        "challenges": {
+          "type": "string",
+          "example": "Struggled with time management"
+        },
+        "wins": {
+          "type": "string",
+          "example": "Finished all homework ahead of deadline"
+        },
+        "creativeTime": {
+          "type": "string",
+          "example": "Sketched ideas for UI project"
         }
       }
     }

@@ -25,40 +25,62 @@ const doc = {
             age: 30,
             avatar: 1
         },
-        Entry: {
+        SocialEntry: {
             user: "userId123",
-            date: "2025-05-20",
-            mood: 4,
+            date: "2025-06-07",
+            socialInteraction: 7,
+            connection: "Had lunch with a friend"
+        },
+        PhysicalEntry: {
+            user: "userId123",
+            date: "2025-06-07",
+            mood: 8,
             exercise: true,
-            water: 8,
+            water: "2 liters",
             sleepHours: 7.5,
-            bestMemory: "Had lunch with my friend",
-            gratitude: "My health"
+            healthyEating: true,
+            homeCare: "Cleaned the kitchen and did laundry"
+        },
+        SpiritualEntry: {
+            user: "userId123",
+            date: "2025-06-07",
+            prayerTime: "Morning and night",
+            scriptureStudyMinutes: 30,
+            comeFollowMeStudy: true,
+            sacramentMeeting: true,
+            ministering: false,
+            templeAttendance: true,
+            spiritualFeeling: "Peaceful and uplifted",
+            journal: "Felt inspired after reading Alma 32"
+        },
+        IntellectualEntry: {
+            user: "userId123",
+            date: "2025-06-07",
+            studyTime: 120,
+            courses: "BYU Software Development",
+            booksRead: "Atomic Habits",
+            challenges: "Struggled with time management",
+            wins: "Finished all homework ahead of deadline",
+            creativeTime: "Sketched ideas for UI project"
         }
+        
     },
     securityDefinitions: {
-    cookieAuth: {
-        type: "apiKey",
-        in: "cookie",
-        name: "connect.sid"
-    }
+        cookieAuth: {
+            type: "apiKey",
+            in: "cookie",
+            name: "connect.sid"
+        }
     },
 
     externalDocs: {
         description: "GitHub Repository",
         url: "https://github.com/GreiceMoreira/cse341-gm/tree/main/project3-wellness"
-      }
+    }
 
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = [
-  './server.js',
-  './routes/accounts.js',
-  './routes/social.js',
-  './routes/spiritual.js',
-  './routes/intellectual.js',
-  './routes/physical.js'
-];
+const endpointsFiles = ['./server.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

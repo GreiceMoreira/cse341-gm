@@ -6,70 +6,123 @@ const {handleValidationErrors} = require('../validations/handleValidationErrors'
 const {validateUserDelete} = require('../validations/deleteValidation')
 const {isAuthenticated} = require('../middleware/authenticate')
 
-/**
- * @route GET /users/{id}
- * @group Users - Operations about users
- * @summary Get user details by ID
- * @security cookieAuth
- * @param {string} id.path.required - User ID
- * @returns {object} 200 - User object
- * @returns {Error} 400 - User not identified
- * @returns {Error} 500 - Server error
- */
+/// GET user by ID
 router.get('/:id',
-    isAuthenticated,
-    userController.getAccount);
+  /*
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Get user details by ID'
+  #swagger.security = [{ "cookieAuth": [] }]
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'User ID',
+    required: true,
+    type: 'string'
+  }
+  #swagger.responses[200] = {
+    description: 'User object',
+    schema: { $ref: '#/definitions/User' }
+  }
+  #swagger.responses[400] = { description: 'User not identified' }
+  #swagger.responses[500] = { description: 'Server error' }
+  */
+  isAuthenticated,
+  userController.getAccount
+);
 
+// POST create new user
+router.post('/',
+  /*
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Create a new user account'
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: '#/definitions/User' }
+      }
+    }
+  }
+  #swagger.responses[201] = {
+    description: 'Created user object',
+    schema: { $ref: '#/definitions/User' }
+  }
+  #swagger.responses[400] = { description: 'Bad request (validation or save error)' }
+  #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  validateUser,
+  handleValidationErrors,
+  userController.newAccount
+);
 
-/**
- * @route POST /users
- * @group Users - Operations about users
- * @summary Create a new user account
- * @param {User} request.body.required - User data (email, password, name, age, avatar)
- * @returns {User} 201 - Created user object
- * @returns {Error} 400 - Bad request (validation or save error)
- * @returns {Error} 500 - Internal server error
- */
-router.post('/', 
-    validateUser,
-    handleValidationErrors,
-    userController.newAccount);
+// PUT update user by ID
+router.put('/:id',
+  /*
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Update an existing user'
+  #swagger.security = [{ "cookieAuth": [] }]
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'User ID',
+    required: true,
+    type: 'string'
+  }
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: '#/definitions/User' }
+      }
+    }
+  }
+  #swagger.responses[200] = {
+    description: 'Updated user object',
+    schema: { $ref: '#/definitions/User' }
+  }
+  #swagger.responses[400] = { description: 'No user found or bad request' }
+  #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  isAuthenticated,
+  validateUser,
+  handleValidationErrors,
+  userController.updateUser
+);
 
-/**
- * @route PUT /users/{id}
- * @group Users - Operations about users
- * @summary Update an existing user
- * @security cookieAuth
- * @param {string} id.path.required - User ID
- * @param {User.model} request.body.required - Updated user data (email, password, name, age, avatar)
- * @returns {User.model} 200 - Updated user object
- * @returns {Error} 400 - No user found or bad request
- * @returns {Error} 500 - Internal server error
- */
-router.put('/:id', 
-    isAuthenticated,
-    validateUser,
-    handleValidationErrors,
-    userController.updateUser);
-
-/**
- * @route DELETE /users/{id}
- * @group Users - Operations about users
- * @summary Delete a user (requires password)
- * @security cookieAuth
- * @param {string} id.path.required - User ID
- * @param {object} request.body.required - Object with password { password: string }
- * @returns {object} 200 - Success message
- * @returns {Error} 401 - Incorrect password
- * @returns {Error} 404 - No user found
- * @returns {Error} 500 - Internal server error
- */
-
+// DELETE user by ID (needs password)
 router.delete('/:id',
-    isAuthenticated, 
-    validateUserDelete,
-    handleValidationErrors,
-    userController.deleteMyUser);
+  /*
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Delete a user (requires password)'
+  #swagger.security = [{ "cookieAuth": [] }]
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'User ID',
+    required: true,
+    type: 'string'
+  }
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: {
+          type: 'object',
+          properties: {
+            password: { type: 'string' }
+          },
+          required: ['password']
+        }
+      }
+    }
+  }
+  #swagger.responses[200] = { description: 'Success message' }
+  #swagger.responses[401] = { description: 'Incorrect password' }
+  #swagger.responses[404] = { description: 'No user found' }
+  #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  isAuthenticated,
+  validateUserDelete,
+  handleValidationErrors,
+  userController.deleteMyUser
+);
 
 module.exports = router;
 
