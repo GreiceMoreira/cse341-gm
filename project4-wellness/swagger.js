@@ -18,7 +18,6 @@ const doc = {
 
     definitions: {
         User: {
-            id: "123456789",
             email: "user@example.com",
             password: "strongpassword123",
             name: "Jane Doe",
@@ -80,7 +79,7 @@ const doc = {
 
     externalDocs: {
         description: "GitHub Repository",
-        url: "https://github.com/GreiceMoreira/cse341-gm/tree/main/project3-wellness"
+        url: "https://github.com/GreiceMoreira/cse341-gm/tree/main/project4-wellness"
     }
 
 };

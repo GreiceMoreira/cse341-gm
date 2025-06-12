@@ -100,16 +100,12 @@ router.delete('/:id',
     type: 'string'
   }
   #swagger.parameters['password'] = {
-    in: 'body',
-    description: 'Password to confirm account deletion',
-    required: true,
-    schema: {
-      type: 'object',
-      properties: {
-        password: { type: 'string' }
-      },
-      required: ['password']
-    }
+  in: 'body',
+  description: 'Password required to delete the account',
+  required: true,
+  schema: {
+    password: 'mypassword123'
+  }
   }
   #swagger.responses[200] = { description: 'Success message' }
   #swagger.responses[401] = { description: 'Incorrect password' }

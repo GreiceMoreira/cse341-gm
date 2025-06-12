@@ -199,37 +199,14 @@
           {
             "name": "password",
             "in": "body",
-            "description": "Password to confirm account deletion",
+            "description": "Password required to delete the account",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
+                "password": {
                   "type": "string",
-                  "example": "object"
-                },
-                "properties": {
-                  "type": "object",
-                  "properties": {
-                    "password": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "example": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "password"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "example": "mypassword123"
                 }
               }
             }
@@ -1052,10 +1029,6 @@
     "User": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "example": "123456789"
-        },
         "email": {
           "type": "string",
           "example": "user@example.com"
@@ -1259,6 +1232,6 @@
   },
   "externalDocs": {
     "description": "GitHub Repository",
-    "url": "https://github.com/GreiceMoreira/cse341-gm/tree/main/project3-wellness"
+    "url": "https://github.com/GreiceMoreira/cse341-gm/tree/main/project4-wellness"
   }
 }
