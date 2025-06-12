@@ -45,10 +45,11 @@ const updateIntellectualEntry = async (req, res) => {
         return res.status(400).json({errors: errors.array()});
     }
 
-try {
+    try {
         const date = req.params.date
         const {user, studyMinutes, pagesBooksRead, newSkillsPracticed,
         mentalState, notes, motivationLevel, distractionsCount } = req.body
+
         const {targetDate, nextDate} = getDateRange(date);
 
         const updated = await IntellectualEntry.findOneAndUpdate(
@@ -82,11 +83,15 @@ try {
     }
 };
 
+const getAllIntellectualEntries = getAllEntries(IntellectualEntry);
+const getIntellectualEntryByDate = getEntryByDate;
+const deleteIntellectualEntryByDate = deleteEntryByDate(IntellectualEntry);
+
 
 module.exports = {
-  getAllIntellectualEntries:(req, res) => getAllEntries(IntellectualEntry, req, res),
-  getIntellectualEntryByDate: (req, res) => getEntryByDate(IntellectualEntry, req, res),
-  deleteIntellectualEntryByDate: (req, res) => deleteEntryByDate(IntellectualEntry, req, res),
+  getAllIntellectualEntries,
+  getIntellectualEntryByDate,
+  deleteIntellectualEntryByDate,
   createIntellectualEntry,
   updateIntellectualEntry
 };

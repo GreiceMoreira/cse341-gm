@@ -9,7 +9,7 @@ const createSocialEntry = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-const {user, date, interactionsCount, socialActivities, 
+    const {user, date, interactionsCount, socialActivities, 
         interactionType, interactionQuality, energyAfterSocializing,
         socialMood } = req.body
 
@@ -83,10 +83,14 @@ const updateSocialEntry = async (req, res) => {
     }
 };
 
+const getAllSocialEntries = getAllEntries(SocialEntry);
+const getSocialEntryByDate = getEntryByDate;
+const deleteSocialEntryByDate = deleteEntryByDate(SocialEntry);
+
 module.exports = {
-  getAllSocialEntries: (req, res) => getAllEntries(SocialEntry, req, res),
-  getSocialEntryByDate: (req, res) => getEntryByDate(SocialEntry, req, res),
-  deleteSocialEntryByDate: (req, res) => deleteEntryByDate(SocialEntry, req, res),
+  getAllSocialEntries,
+  getSocialEntryByDate,
+  deleteSocialEntryByDate,
   createSocialEntry,
   updateSocialEntry
 };

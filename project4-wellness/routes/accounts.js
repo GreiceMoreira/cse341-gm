@@ -6,6 +6,32 @@ const {handleValidationErrors} = require('../validations/handleValidationErrors'
 const {validateUserDelete} = require('../validations/deleteValidation')
 const {isAuthenticated} = require('../middleware/authenticate')
 
+
+// POST create new user
+router.post('/',
+  /*
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Create a new user account'
+  #swagger.parameters['user'] = {
+      in: 'body',
+      required: true,
+      description: 'User data (email, password, name, age, avatar)',
+      schema: {
+          $ref: '#/definitions/User'
+      }
+  }
+  #swagger.responses[201] = {
+    description: 'Created user object',
+    schema: { $ref: '#/definitions/User' }
+  }
+  #swagger.responses[400] = { description: 'Bad request (validation or save error)' }
+  #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  validateUser,
+  handleValidationErrors,
+  userController.newAccount
+);
+
 /// GET user by ID
 router.get('/:id',
   /*
@@ -29,30 +55,6 @@ router.get('/:id',
   userController.getAccount
 );
 
-// POST create new user
-router.post('/',
-  /*
-  #swagger.tags = ['Users']
-  #swagger.summary = 'Create a new user account'
-  #swagger.requestBody = {
-    required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: '#/definitions/User' }
-      }
-    }
-  }
-  #swagger.responses[201] = {
-    description: 'Created user object',
-    schema: { $ref: '#/definitions/User' }
-  }
-  #swagger.responses[400] = { description: 'Bad request (validation or save error)' }
-  #swagger.responses[500] = { description: 'Internal server error' }
-  */
-  validateUser,
-  handleValidationErrors,
-  userController.newAccount
-);
 
 // PUT update user by ID
 router.put('/:id',
@@ -66,13 +68,11 @@ router.put('/:id',
     required: true,
     type: 'string'
   }
-  #swagger.requestBody = {
+  #swagger.parameters['user'] = {
+    in: 'body',
+    description: 'Updated user data',
     required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: '#/definitions/User' }
-      }
-    }
+    schema: { $ref: '#/definitions/User' }
   }
   #swagger.responses[200] = {
     description: 'Updated user object',
@@ -99,18 +99,16 @@ router.delete('/:id',
     required: true,
     type: 'string'
   }
-  #swagger.requestBody = {
+  #swagger.parameters['password'] = {
+    in: 'body',
+    description: 'Password to confirm account deletion',
     required: true,
-    content: {
-      "application/json": {
-        schema: {
-          type: 'object',
-          properties: {
-            password: { type: 'string' }
-          },
-          required: ['password']
-        }
-      }
+    schema: {
+      type: 'object',
+      properties: {
+        password: { type: 'string' }
+      },
+      required: ['password']
     }
   }
   #swagger.responses[200] = { description: 'Success message' }

@@ -51,8 +51,10 @@ const updatePhysicalEntry = async (req, res) => {
         const {user, mood, exercise, 
         water, sleepHours, healthyEating,
         homeCare } = req.body
+
         const {targetDate, nextDate} = getDateRange(date);
-const updated = await PhysicalEntry.findOneAndUpdate(
+        
+        const updated = await PhysicalEntry.findOneAndUpdate(
             { 
                 user: user,   
                 date: {
@@ -81,12 +83,14 @@ const updated = await PhysicalEntry.findOneAndUpdate(
         res.status(500).json({message: err.message})
     }
   }
+const getAllPhysicalEntries = getAllEntries(PhysicalEntry);
+const getPhysicalEntryByDate = getEntryByDate;
+const deletePhysicalEntryByDate = deleteEntryByDate(PhysicalEntry);
 
 module.exports = {
-  getAllPhysicalEntries: (req, res) => getAllEntries(PhysicalEntry, req, res),
-  getPhysicalEntryByDate: (req, res) => getEntryByDate(PhysicalEntry, req, res),
-  deletePhysicalEntryByDate: (req, res) => deleteEntryByDate(PhysicalEntry, req, res),
+  getAllPhysicalEntries,
+  getPhysicalEntryByDate,
+  deletePhysicalEntryByDate,
   createPhysicalEntry,
   updatePhysicalEntry
 };
-

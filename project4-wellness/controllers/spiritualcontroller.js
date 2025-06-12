@@ -47,7 +47,6 @@ const updateSpiritualEntry = async (req, res) => {
         return res.status(400).json({errors: errors.array()});
     }
 
-
     try {
         const date = req.params.date
         const { user, prayerTime, scriptureStudyMinutes, 
@@ -88,10 +87,14 @@ const updateSpiritualEntry = async (req, res) => {
     }
 };
 
+const getAllSpiritualEntries = getAllEntries(SpiritualEntry);
+const getSpiritualEntryByDate = getEntryByDate;
+const deleteSpiritualEntryByDate = deleteEntryByDate(SpiritualEntry);
+
 module.exports = {
-  getAllSpiritualEntries: (req, res) => getAllEntries(SpiritualEntry, req, res),
-  getSpiritualEntryByDate: (req, res) => getEntryByDate(SpiritualEntry, req, res),
-  deleteSpiritualEntryByDate: (req, res) => deleteEntryByDate(SpiritualEntry, req, res),
+  getAllSpiritualEntries,
+  getSpiritualEntryByDate,
+  deleteSpiritualEntryByDate,
   createSpiritualEntry,
   updateSpiritualEntry
 };

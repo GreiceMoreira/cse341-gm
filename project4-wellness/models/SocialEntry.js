@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const socialEntrySchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  date: { type: Date, default: Date.now, unique: true },
+  date: { type: Date, default: Date.now},
 
   interactionsCount: { type: Number, min: 0, required: false },
   socialActivities: { type: [String], required: false }, // e.g., ["Lunch with friend", "Call with family"]

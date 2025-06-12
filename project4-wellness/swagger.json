@@ -4,15 +4,15 @@
     "title": "Mood Journal API",
     "description": "API to create and track mood journal entries including sleep, hydration, and exercise.",
     "contact": {
-      "name": "Greice Moreira",
+      "name": "Greice Moreira teste",
       "email": "deandradegreice@gmail.com"
     },
     "version": "1.0.0"
   },
-  "host": "cse341-gm.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "cookieAuth": {
@@ -22,6 +22,80 @@
     }
   },
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/github": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/github/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user account",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "description": "User data (email, password, name, age, avatar)",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created user object",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad request (validation or save error)"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "get": {
         "tags": [
@@ -74,6 +148,15 @@
             "required": true,
             "type": "string",
             "description": "User ID"
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Updated user data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
@@ -97,17 +180,7 @@
           {
             "cookieAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
+        ]
       },
       "delete": {
         "tags": [
@@ -122,6 +195,44 @@
             "required": true,
             "type": "string",
             "description": "User ID"
+          },
+          {
+            "name": "password",
+            "in": "body",
+            "description": "Password to confirm account deletion",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "type": "array",
+                  "example": [
+                    "password"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -145,58 +256,7 @@
           {
             "cookieAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "password"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Create a new user account",
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created user object",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Bad request (validation or save error)"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
+        ]
       }
     },
     "/social/": {
@@ -204,10 +264,36 @@
         "tags": [
           "SocialEntries"
         ],
+        "summary": "Get all social entries",
         "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Array of social entries",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/SocialEntry"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -215,26 +301,34 @@
         "tags": [
           "SocialEntries"
         ],
+        "summary": "Create a new social entry",
         "description": "",
+        "parameters": [
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Social entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SocialEntry"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created social entry",
+            "schema": {
+              "$ref": "#/definitions/SocialEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or creation error"
           },
           "409": {
             "description": "Conflict"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/SocialEntry"
-              }
-            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -244,6 +338,7 @@
         "tags": [
           "SocialEntries"
         ],
+        "summary": "Get social entry by date",
         "description": "",
         "parameters": [
           {
@@ -252,11 +347,31 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Social entry object",
+            "schema": {
+              "$ref": "#/definitions/SocialEntry"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -264,6 +379,7 @@
         "tags": [
           "SocialEntries"
         ],
+        "summary": "Update social entry by date",
         "description": "",
         "parameters": [
           {
@@ -272,30 +388,32 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry to update (YYYY-MM-DD)"
+          },
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Updated social entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SocialEntry"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Updated social entry",
+            "schema": {
+              "$ref": "#/definitions/SocialEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or update error"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entry not found"
           },
           "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/SocialEntry"
-              }
-            }
+            "description": "Internal server error"
           }
         }
       },
@@ -303,6 +421,7 @@
         "tags": [
           "SocialEntries"
         ],
+        "summary": "Delete social entry by date",
         "description": "",
         "parameters": [
           {
@@ -317,12 +436,19 @@
             "in": "query",
             "description": "User ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "userId123"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Entry deleted successfully"
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
           }
         }
       }
@@ -332,10 +458,42 @@
         "tags": [
           "SpiritualEntries"
         ],
+        "summary": "Get all spiritual entries",
         "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of spiritual entries",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/SpiritualEntry"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid user ID"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -343,26 +501,34 @@
         "tags": [
           "SpiritualEntries"
         ],
+        "summary": "Create a new spiritual entry",
         "description": "",
+        "parameters": [
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Spiritual entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpiritualEntry"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created spiritual entry",
+            "schema": {
+              "$ref": "#/definitions/SpiritualEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or creation error"
           },
           "409": {
             "description": "Conflict"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/SpiritualEntry"
-              }
-            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -372,6 +538,7 @@
         "tags": [
           "SpiritualEntries"
         ],
+        "summary": "Get spiritual entry by date",
         "description": "",
         "parameters": [
           {
@@ -380,11 +547,31 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Spiritual entry object",
+            "schema": {
+              "$ref": "#/definitions/SpiritualEntry"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -392,6 +579,7 @@
         "tags": [
           "SpiritualEntries"
         ],
+        "summary": "Update spiritual entry by date",
         "description": "",
         "parameters": [
           {
@@ -400,30 +588,32 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry to update (YYYY-MM-DD)"
+          },
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Updated spiritual entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SpiritualEntry"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Updated spiritual entry",
+            "schema": {
+              "$ref": "#/definitions/SpiritualEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or update error"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entry not found"
           },
           "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/SpiritualEntry"
-              }
-            }
+            "description": "Internal server error"
           }
         }
       },
@@ -431,6 +621,7 @@
         "tags": [
           "SpiritualEntries"
         ],
+        "summary": "Delete spiritual entry by date",
         "description": "",
         "parameters": [
           {
@@ -445,12 +636,19 @@
             "in": "query",
             "description": "User ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "userId123"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Entry deleted successfully"
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
           }
         }
       }
@@ -460,10 +658,42 @@
         "tags": [
           "PhysicalEntries"
         ],
+        "summary": "Get all physical entries for a user",
         "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of physical entries",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/PhysicalEntry"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid user ID"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -471,26 +701,34 @@
         "tags": [
           "PhysicalEntries"
         ],
+        "summary": "Create a new physical entry",
         "description": "",
+        "parameters": [
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Physical entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PhysicalEntry"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created physical entry",
+            "schema": {
+              "$ref": "#/definitions/PhysicalEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or creation error"
           },
           "409": {
             "description": "Conflict"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/PhysicalEntry"
-              }
-            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -500,6 +738,7 @@
         "tags": [
           "PhysicalEntries"
         ],
+        "summary": "Get physical entry by date",
         "description": "",
         "parameters": [
           {
@@ -508,11 +747,31 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Physical entry object",
+            "schema": {
+              "$ref": "#/definitions/PhysicalEntry"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -520,6 +779,7 @@
         "tags": [
           "PhysicalEntries"
         ],
+        "summary": "Update physical entry by date",
         "description": "",
         "parameters": [
           {
@@ -528,30 +788,32 @@
             "required": true,
             "type": "string",
             "description": "Entry date (YYYY-MM-DD)"
+          },
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Updated physical entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PhysicalEntry"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Updated physical entry",
+            "schema": {
+              "$ref": "#/definitions/PhysicalEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or update error"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entry not found"
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/PhysicalEntry"
-              }
-            }
           }
         }
       },
@@ -559,6 +821,7 @@
         "tags": [
           "PhysicalEntries"
         ],
+        "summary": "Delete physical entry by date",
         "description": "",
         "parameters": [
           {
@@ -573,12 +836,22 @@
             "in": "query",
             "description": "User ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "userId123"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Entry successfully deleted"
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -588,10 +861,30 @@
         "tags": [
           "IntellectualEntries"
         ],
+        "summary": "Get all intellectual entries for a user",
         "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "List of intellectual entries",
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid user ID"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -599,26 +892,34 @@
         "tags": [
           "IntellectualEntries"
         ],
+        "summary": "Create a new intellectual entry",
         "description": "",
+        "parameters": [
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "New intellectual entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created intellectual entry",
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or creation error"
           },
           "409": {
             "description": "Conflict"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/IntellectualEntry"
-              }
-            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -628,6 +929,7 @@
         "tags": [
           "IntellectualEntries"
         ],
+        "summary": "Get intellectual entry by date for a user",
         "description": "",
         "parameters": [
           {
@@ -636,11 +938,31 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry (YYYY-MM-DD)"
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "User ID",
+            "required": true,
+            "type": "string",
+            "example": "665cf1c01d13c63a9e8f601d"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Single intellectual entry object",
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -648,6 +970,7 @@
         "tags": [
           "IntellectualEntries"
         ],
+        "summary": "Update intellectual entry by date",
         "description": "",
         "parameters": [
           {
@@ -656,30 +979,32 @@
             "required": true,
             "type": "string",
             "description": "Date of the entry to update (YYYY-MM-DD)"
+          },
+          {
+            "name": "entry",
+            "in": "body",
+            "description": "Updated intellectual entry data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Updated intellectual entry",
+            "schema": {
+              "$ref": "#/definitions/IntellectualEntry"
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Validation or update error"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Entry not found"
           },
           "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/IntellectualEntry"
-              }
-            }
+            "description": "Internal server error"
           }
         }
       },
@@ -687,6 +1012,7 @@
         "tags": [
           "IntellectualEntries"
         ],
+        "summary": "Delete intellectual entry by date",
         "description": "",
         "parameters": [
           {
@@ -701,12 +1027,22 @@
             "in": "query",
             "description": "User ID",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "userId123"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Entry successfully deleted"
+          },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing or invalid parameters"
+          },
+          "404": {
+            "description": "Entry not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -747,19 +1083,47 @@
       "properties": {
         "user": {
           "type": "string",
-          "example": "userId123"
+          "example": "6849bacf9069708e328de0de"
         },
         "date": {
           "type": "string",
           "example": "2025-06-07"
         },
-        "socialInteraction": {
+        "interactionsCount": {
           "type": "number",
-          "example": 7
+          "example": 3
         },
-        "connection": {
+        "socialActivities": {
+          "type": "array",
+          "example": [
+            "Lunch with friend",
+            "Call with family"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "interactionType": {
+          "type": "array",
+          "example": [
+            "In-person",
+            "Online"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "interactionQuality": {
           "type": "string",
-          "example": "Had lunch with a friend"
+          "example": "Good"
+        },
+        "energyAfterSocializing": {
+          "type": "string",
+          "example": "Refreshed"
+        },
+        "socialMood": {
+          "type": "string",
+          "example": "Connected"
         }
       }
     },
@@ -768,7 +1132,7 @@
       "properties": {
         "user": {
           "type": "string",
-          "example": "userId123"
+          "example": "6849bacf9069708e328de0de"
         },
         "date": {
           "type": "string",
@@ -783,8 +1147,8 @@
           "example": true
         },
         "water": {
-          "type": "string",
-          "example": "2 liters"
+          "type": "number",
+          "example": 2
         },
         "sleepHours": {
           "type": "number",
@@ -796,7 +1160,7 @@
         },
         "homeCare": {
           "type": "string",
-          "example": "Cleaned the kitchen and did laundry"
+          "example": "Cleaned the kitchen and folded laundry"
         }
       }
     },
@@ -805,15 +1169,15 @@
       "properties": {
         "user": {
           "type": "string",
-          "example": "userId123"
+          "example": "6849bacf9069708e328de0de"
         },
         "date": {
           "type": "string",
           "example": "2025-06-07"
         },
         "prayerTime": {
-          "type": "string",
-          "example": "Morning and night"
+          "type": "number",
+          "example": 2
         },
         "scriptureStudyMinutes": {
           "type": "number",
@@ -833,15 +1197,15 @@
         },
         "templeAttendance": {
           "type": "boolean",
-          "example": true
+          "example": false
         },
         "spiritualFeeling": {
           "type": "string",
-          "example": "Peaceful and uplifted"
+          "example": "Grateful"
         },
         "journal": {
           "type": "string",
-          "example": "Felt inspired after reading Alma 32"
+          "example": "Reflected on faith during study"
         }
       }
     },
@@ -850,35 +1214,45 @@
       "properties": {
         "user": {
           "type": "string",
-          "example": "userId123"
+          "example": "6849bacf9069708e328de0de"
         },
         "date": {
           "type": "string",
           "example": "2025-06-07"
         },
-        "studyTime": {
+        "studyMinutes": {
           "type": "number",
           "example": 120
         },
-        "courses": {
-          "type": "string",
-          "example": "BYU Software Development"
+        "pagesBooksRead": {
+          "type": "number",
+          "example": 45
         },
-        "booksRead": {
-          "type": "string",
-          "example": "Atomic Habits"
+        "newSkillsPracticed": {
+          "type": "array",
+          "example": [
+            "UI Design",
+            "Git"
+          ],
+          "items": {
+            "type": "string"
+          }
         },
-        "challenges": {
+        "mentalState": {
           "type": "string",
-          "example": "Struggled with time management"
+          "example": "Focused"
         },
-        "wins": {
+        "notes": {
           "type": "string",
-          "example": "Finished all homework ahead of deadline"
+          "example": "Learned new CSS tricks"
         },
-        "creativeTime": {
-          "type": "string",
-          "example": "Sketched ideas for UI project"
+        "motivationLevel": {
+          "type": "number",
+          "example": 8
+        },
+        "distractionsCount": {
+          "type": "number",
+          "example": 2
         }
       }
     }

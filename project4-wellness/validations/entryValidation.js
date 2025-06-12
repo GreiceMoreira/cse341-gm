@@ -103,15 +103,18 @@ const validateIntellectualEntryCreate = [
     .withMessage('studyMinutes must be a number greater than or equal to 0'),
   body('pagesBooksRead').isInt({ min: 0 })
     .withMessage('pagesBooksRead must be a number greater than or equal to 0'),
-  body('newSkillsPracticed').optional().isString()
-    .withMessage('newSkillsPracticed must be a string'),
-  body('mentalState').optional().isString()
-    .withMessage('mentalState must be a string'),
+  body('newSkillsPracticed').optional().isArray()
+    .withMessage('newSkillsPracticed must be an array of strings'),
+  body('newSkillsPracticed.*').optional().isString()
+    .withMessage('Each skill must be a string'),
+  body('mentalState')
+    .isIn(['Focused', 'Tired', 'Curious', 'Distracted', 'Motivated', 'Overwhelmed'])
+    .withMessage('mentalState must be one of the predefined values'),
   body('notes').optional().isString()
     .withMessage('notes must be a string'),
-  body('motivationLevel').isInt({ min: 0, max: 10 })
+  body('motivationLevel').isInt({ min: 1, max: 10 })
     .withMessage('motivationLevel must be an integer between 0 and 10'),
-  body('distractionsCount').isInt({ min: 0 })
+  body('distractionsCount').optional().isInt({ min: 0 })
     .withMessage('distractionsCount must be a number greater than or equal to 0'),
 ];
 
@@ -124,15 +127,18 @@ const validateIntellectualEntryUpdate = [
     .withMessage('studyMinutes must be a number greater than or equal to 0'),
   body('pagesBooksRead').isInt({ min: 0 })
     .withMessage('pagesBooksRead must be a number greater than or equal to 0'),
-  body('newSkillsPracticed').optional().isString()
-    .withMessage('newSkillsPracticed must be a string'),
-  body('mentalState').optional().isString()
-    .withMessage('mentalState must be a string'),
+  body('newSkillsPracticed').optional().isArray()
+    .withMessage('newSkillsPracticed must be an array of strings'),
+  body('newSkillsPracticed.*').optional().isString()
+    .withMessage('Each skill must be a string'),
+  body('mentalState')
+    .isIn(['Focused', 'Tired', 'Curious', 'Distracted', 'Motivated', 'Overwhelmed'])
+    .withMessage('mentalState must be one of the predefined values'),
   body('notes').optional().isString()
     .withMessage('notes must be a string'),
-  body('motivationLevel').isInt({ min: 0, max: 10 })
+  body('motivationLevel').isInt({ min: 1, max: 10 })
     .withMessage('motivationLevel must be an integer between 0 and 10'),
-  body('distractionsCount').isInt({ min: 0 })
+  body('distractionsCount').optional().isInt({ min: 0 })
     .withMessage('distractionsCount must be a number greater than or equal to 0'),
 ];
 
@@ -145,8 +151,8 @@ const validatePhysicalEntryCreate = [
     .withMessage('Mood must be an integer between 1 and 10'),
   body('exercise').isBoolean()
     .withMessage('Exercise must be true or false'),
-  body('water').isString().isLength({ max: 15 })
-    .withMessage('Water must be a string with max 15 characters'),
+  body('water').isInt({ max: 15 })
+    .withMessage('Water must be an integer between 0 and 15'),
   body('sleepHours').isFloat({ min: 0, max: 24 })
     .withMessage('Sleep hours must be a number between 0 and 24'),
   body('healthyEating').isBoolean()
@@ -164,8 +170,8 @@ const validatePhysicalEntryUpdate = [
     .withMessage('Mood must be an integer between 1 and 10'),
   body('exercise').isBoolean()
     .withMessage('Exercise must be true or false'),
-  body('water').isString().isLength({ max: 15 })
-    .withMessage('Water must be a string with max 15 characters'),
+  body('water').isInt({ max: 15 })
+    .withMessage('Water must be an integer between 0 and 15'),
   body('sleepHours').isFloat({ min: 0, max: 24 })
     .withMessage('Sleep hours must be a number between 0 and 24'),
   body('healthyEating').isBoolean()

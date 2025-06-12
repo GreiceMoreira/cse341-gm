@@ -17,6 +17,7 @@ const swaggerRoute = require('./routes/swagger');
 const accountRoutes = require('./routes/accounts');
 
 app
+    .use(cors())
     .use(session({
         secret: "secret",
         resave: false,
@@ -24,7 +25,6 @@ app
     }))
     .use(passport.initialize())
     .use(passport.session())
-    .use(cors())
     .use(express.json())
     .use(swaggerRoute)
     .use('/users', accountRoutes)
@@ -33,42 +33,46 @@ app
     .use('/physical', physicalRoutes)
     .use('/intellectual', intellectualRoutes)
 
-// passport.use(new GitHubStrategy({
-//     clientID: process.env.GITHUB_CLIENT_ID,
-//     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//     callbackURL: process.env.CALLBACK_URL
-// }, 
-// function(accessToken, refreshToken, profile, done){
-//     return done(null, profile);
-// }));
+const User = require('./models/User');
 
-// passport.serializeUser((user, done)=>{
-//     done(null, user)
-// })
-// passport.deserializeUser((user, done)=>{
-//     done(null, user)
-// })
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL,
+}, 
+function(accessToken, refreshToken, profile, done){
+    return done(null, profile);
+}));
 
-// app.get('/', (req, res) => {
-//     res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : `Logged Out`)
-// });
+passport.serializeUser((user, done)=>{
+    done(null, user)
+})
+passport.deserializeUser((user, done)=>{
+    done(null, user)
+})
 
-// app.get('/github', passport.authenticate('github'));
+app.get('/', (req, res) => {
+    res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : `Logged Out`)
+});
 
-// app.get('/github/callback', passport.authenticate('github', {
-//     failureRedirect: '/api-docs', session:false}),
-//     (req, res) => {
-//         req.session.user = req.user;
-//         res.redirect('/');
-//     });
+app.get('/github', passport.authenticate('github'));
 
-// app.get('/logout', (req, res, next) => {
-//     req.logout(function(err) {
-//         if (err) { return next(err); }
-//         req.session.user = undefined
-//         res.redirect('/');
-//     });
-// });
+app.get('/github/callback', passport.authenticate('github', {
+    failureRedirect: '/api-docs', session:false}),
+    (req, res) => {
+        req.session.user = req.user;
+        res.redirect('/');
+    });
+
+app.get('/logout', (req, res, next) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        req.session.user = undefined
+        res.redirect('/');
+    });
+});
+
+
 
 
 connectDB()

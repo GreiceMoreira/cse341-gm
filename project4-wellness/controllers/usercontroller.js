@@ -2,23 +2,6 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { prepareUserData } = require('../utils/userUtils');
 
-const getAccount = async(req, res) => {
-    try{
-        const {id} = req.params;
-        const user = await User.findById(id)
-
-        if(!user) {
-            return res.status(400).json({message: 'User not identified'})
-        }
-        
-        res.json(user);
-
-
-    }catch(err) {
-        res.status(500).json({message: err.message})
-    }
-}
-
 const newAccount = async(req , res) => {
     const { email, password, name, age, avatar } = req.body;
     try{
@@ -53,6 +36,24 @@ const updateUser = async(req , res) => {
     }
 }
 
+
+const getAccount = async(req, res) => {
+    try{
+        const {id} = req.params;
+        const user = await User.findById(id)
+
+        if(!user) {
+            return res.status(400).json({message: 'User not identified'})
+        }
+        
+        res.json(user);
+
+
+    }catch(err) {
+        res.status(500).json({message: err.message})
+    }
+}
+
 const deleteMyUser = async (req, res) => {
     try{
         const {id} = req.params;
@@ -75,32 +76,9 @@ const deleteMyUser = async (req, res) => {
         res.status(500).json({message: err.message})
     }
 }
-
 module.exports = {
     getAccount,
     newAccount,
     updateUser,
     deleteMyUser
 }
-
-
-
-
-// ○
-// POST /user/login – Login using email and password
-// ○
-// GET /user/logout – Logout the authenticated user
-// ○
-// GET /user/profile – Get the authenticated user’s profile
-// ○
-// PUT /user/profile – Update the authenticated user’s profile
-// ○
-// DELETE /user/profile – Delete the authenticated user’s account
-// ○
-// POST /user/oauth/google – Login via Google OAuth
-// ○
-// GET /user/all – (admin only) List all users
-// ○
-// DELETE /user/{userId} – (admin only) Delete a specific user
-// ○
-// PUT /user/{userId}/role – (admin only) Update the user’s role (e.g., regular → admin)
