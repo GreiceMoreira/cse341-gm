@@ -5,6 +5,7 @@ const {handleValidationErrors} = require('../validations/handleValidationErrors'
 const { validateEntryDelete } = require('../validations/deleteValidation');
 const { validateIntellectualEntryCreate, validateIntellectualEntryUpdate } = require('../validations/entryValidation');
 const { param } = require('express-validator');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 // GET all intellectual entries
 router.get('/',
@@ -55,11 +56,13 @@ router.get('/:date',
   #swagger.responses[500] = { description: 'Internal server error' }
   */
   param('date').isISO8601().toDate().withMessage('Valid date (YYYY-MM-DD) required'),
+  handleValidationErrors,
   intellectualController.getIntellectualEntryByDate
 );
 
 // POST a new intellectual entry
 router.post('/',
+  isAuthenticated,
   /*
   #swagger.tags = ['IntellectualEntries']
   #swagger.summary = 'Create a new intellectual entry'
@@ -69,6 +72,7 @@ router.post('/',
     required: true,
     schema: { $ref: '#/definitions/IntellectualEntry' }
   }
+  #swagger.security = [{ "cookieAuth": [] }]
   #swagger.responses[201] = {
     description: 'Created intellectual entry',
     schema: { $ref: '#/definitions/IntellectualEntry' }
@@ -83,6 +87,7 @@ router.post('/',
 
 // PUT update intellectual entry by date
 router.put('/:date',
+  isAuthenticated,
   /*
   #swagger.tags = ['IntellectualEntries']
   #swagger.summary = 'Update intellectual entry by date'
@@ -98,6 +103,7 @@ router.put('/:date',
     required: true,
     schema: { $ref: '#/definitions/IntellectualEntry' }
   }
+  #swagger.security = [{ "cookieAuth": [] }]
   #swagger.responses[200] = {
     description: 'Updated intellectual entry',
     schema: { $ref: '#/definitions/IntellectualEntry' }

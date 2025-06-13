@@ -75,10 +75,12 @@ app.get('/logout', (req, res, next) => {
 
 
 
-connectDB()
-    .then(()=> {
-        app.listen(port, () => {
-            console.log('Web Server is listening at port ', port)
-    })
-})
+connectDB().then(() => {
+  if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+      console.log('Web Server is listening at port', port);
+    });
+  }
+});
 
+module.exports = app;

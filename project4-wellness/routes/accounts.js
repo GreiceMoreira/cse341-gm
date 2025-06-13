@@ -34,6 +34,7 @@ router.post('/',
 
 /// GET user by ID
 router.get('/:id',
+  isAuthenticated,
   /*
   #swagger.tags = ['Users']
   #swagger.summary = 'Get user details by ID'
@@ -51,13 +52,13 @@ router.get('/:id',
   #swagger.responses[400] = { description: 'User not identified' }
   #swagger.responses[500] = { description: 'Server error' }
   */
-  isAuthenticated,
   userController.getAccount
 );
 
 
 // PUT update user by ID
 router.put('/:id',
+  isAuthenticated,
   /*
   #swagger.tags = ['Users']
   #swagger.summary = 'Update an existing user'
@@ -81,7 +82,6 @@ router.put('/:id',
   #swagger.responses[400] = { description: 'No user found or bad request' }
   #swagger.responses[500] = { description: 'Internal server error' }
   */
-  isAuthenticated,
   validateUser,
   handleValidationErrors,
   userController.updateUser
@@ -89,6 +89,7 @@ router.put('/:id',
 
 // DELETE user by ID (needs password)
 router.delete('/:id',
+  isAuthenticated,
   /*
   #swagger.tags = ['Users']
   #swagger.summary = 'Delete a user (requires password)'
@@ -112,7 +113,6 @@ router.delete('/:id',
   #swagger.responses[404] = { description: 'No user found' }
   #swagger.responses[500] = { description: 'Internal server error' }
   */
-  isAuthenticated,
   validateUserDelete,
   handleValidationErrors,
   userController.deleteMyUser

@@ -56,6 +56,7 @@ router.get('/:date',
   #swagger.responses[500] = { description: 'Internal server error' }
   */
   param('date').isISO8601().toDate().withMessage('Valid date (YYYY-MM-DD) required'),
+  handleValidationErrors,
   socialController.getSocialEntryByDate
 );
 

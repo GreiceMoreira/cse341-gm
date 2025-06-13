@@ -5,6 +5,7 @@ const {handleValidationErrors} = require('../validations/handleValidationErrors'
 const { validateEntryDelete } = require('../validations/deleteValidation');
 const { validatePhysicalEntryCreate, validatePhysicalEntryUpdate } = require('../validations/entryValidation');
 const { param } = require('express-validator');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 // GET all entries
 router.get('/',
@@ -58,11 +59,13 @@ router.get('/:date',
   #swagger.responses[500] = { description: 'Internal server error' }
   */
   param('date').isISO8601().toDate().withMessage('Valid date (YYYY-MM-DD) required'),
+  handleValidationErrors,
   physicalController.getPhysicalEntryByDate
 );
 
 // POST a new entry
 router.post('/',
+  isAuthenticated,
   /*
   #swagger.tags = ['PhysicalEntries']
   #swagger.summary = 'Create a new physical entry'
@@ -72,6 +75,7 @@ router.post('/',
     required: true,
     schema: { $ref: '#/definitions/PhysicalEntry' }
   }
+  #swagger.security = [{ "cookieAuth": [] }]
   #swagger.responses[201] = {
     description: 'Created physical entry',
     schema: { $ref: '#/definitions/PhysicalEntry' }
@@ -86,6 +90,7 @@ router.post('/',
 
 // PUT update entry by date
 router.put('/:date',
+  isAuthenticated,
   /*
   #swagger.tags = ['PhysicalEntries']
   #swagger.summary = 'Update physical entry by date'
@@ -101,6 +106,7 @@ router.put('/:date',
     required: true,
     schema: { $ref: '#/definitions/PhysicalEntry' }
   }
+  #swagger.security = [{ "cookieAuth": [] }]
   #swagger.responses[200] = {
     description: 'Updated physical entry',
     schema: { $ref: '#/definitions/PhysicalEntry' }
