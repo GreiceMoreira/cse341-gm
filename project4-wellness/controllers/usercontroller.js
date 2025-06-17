@@ -57,17 +57,11 @@ const getAccount = async(req, res) => {
 const deleteMyUser = async (req, res) => {
     try{
         const {id} = req.params;
-        const {password} = req.query;
 
         const user = await User.findById(id);
 
         if(!user) {
             return res.status(404).json({message: 'No user found'});
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) {
-            return res.status(401).json({message: `Incorrect password ${isMatch}`})
         }
 
         await User.findByIdAndDelete(id);

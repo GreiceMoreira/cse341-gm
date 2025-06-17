@@ -195,13 +195,6 @@
             "required": true,
             "type": "string",
             "description": "User ID"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "Password required to delete the account",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {

@@ -8,7 +8,6 @@ const validateEntryDelete = [
 
 const validateUserDelete = [
     param('id').notEmpty().withMessage('User ID is required'),
-    query('password').notEmpty().withMessage('Password is required to delete account')
 ]
 
 module.exports = {
