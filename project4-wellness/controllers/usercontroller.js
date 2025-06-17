@@ -58,6 +58,9 @@ const deleteMyUser = async (req, res) => {
     try{
         const {id} = req.params;
         const {password} = req.query;
+        
+        console.log("Password recebido:", password);
+
 
         const user = await User.findById(id);
 
@@ -65,6 +68,7 @@ const deleteMyUser = async (req, res) => {
             return res.status(404).json({message: 'No user found'});
         }
 
+        console.log("Hash do usuário:", user.password);
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) {
             return res.status(401).json({message: 'Incorrect password'})

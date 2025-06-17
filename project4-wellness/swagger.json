@@ -201,15 +201,7 @@
             "in": "query",
             "description": "Password required to delete the account",
             "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "type": "string",
-                  "example": "strongpassword123"
-                }
-              }
-            }
+            "type": "string"
           }
         ],
         "responses": {

@@ -89,7 +89,7 @@ router.put('/:id',
 
 // DELETE user by ID (needs password)
 router.delete('/:id',
-  isAuthenticated,
+  // isAuthenticated,
   /*
   #swagger.tags = ['Users']
   #swagger.summary = 'Delete a user (requires password)'
@@ -104,9 +104,6 @@ router.delete('/:id',
   in: 'query',
   description: 'Password required to delete the account',
   required: true,
-  schema: {
-    password: 'strongpassword123'
-  }
   }
   #swagger.responses[200] = { description: 'Success message' }
   #swagger.responses[401] = { description: 'Incorrect password' }
