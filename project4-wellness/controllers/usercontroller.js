@@ -57,7 +57,7 @@ const getAccount = async(req, res) => {
 const deleteMyUser = async (req, res) => {
     try{
         const {id} = req.params;
-        const {password} = req.body;
+        const {password} = req.query;
 
         const user = await User.findById(id);
 

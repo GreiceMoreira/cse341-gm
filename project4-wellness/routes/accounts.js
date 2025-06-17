@@ -101,7 +101,7 @@ router.delete('/:id',
     type: 'string'
   }
   #swagger.parameters['password'] = {
-  in: 'body',
+  in: 'query',
   description: 'Password required to delete the account',
   required: true,
   schema: {

@@ -1,4 +1,4 @@
-const {param, query, body} = require('express-validator');
+const {param, query} = require('express-validator');
 
 const validateEntryDelete = [
     param('date').exists().withMessage('Date is required and must be in the format YYYY-MM-DD')
@@ -8,7 +8,7 @@ const validateEntryDelete = [
 
 const validateUserDelete = [
     param('id').notEmpty().withMessage('User ID is required'),
-    body('password').notEmpty().withMessage('Password is required to delete account')
+    query('password').notEmpty().withMessage('Password is required to delete account')
 ]
 
 module.exports = {
